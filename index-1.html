@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LTV Media PRO — AI Cinematography & Content Creation</title>
+
+  <!-- SEO -->
+  <meta name="description" content="LTV Media PRO crafts AI-generated cinematic content — brand films, Instagram Reels, and visual campaigns. Chicago & Lithuania." />
+  <meta name="author" content="LTV Media PRO" />
+  <link rel="canonical" href="https://ltvmedia.net" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://ltvmedia.net" />
+  <meta property="og:title" content="LTV Media PRO — AI Cinematography & Content Creation" />
+  <meta property="og:description" content="AI-generated cinematic content for brands and creators. Brand films, Reels, visual campaigns. Chicago & Lithuania." />
+  <meta property="og:image" content="https://ltvmedia.net/og-image.jpg" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@ltvmediapro" />
+  <meta name="twitter:title" content="LTV Media PRO — AI Cinematography & Content Creation" />
+  <meta name="twitter:description" content="AI-generated cinematic content for brands and creators." />
+  <meta name="twitter:image" content="https://ltvmedia.net/og-image.jpg" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ── DESIGN SYSTEM TOKENS ── */
+    :root {
+      --color-bg:        #09090b;
+      --color-surface:   #111113;
+      --color-surface2:  #18181b;
+      --color-border:    rgba(255,255,255,0.07);
+      --color-text:      #f4f4f5;
+      --color-muted:     #71717a;
+      --color-accent:    #c9a96e;   /* warm gold — cinematic */
+      --color-accent2:   #7c6fcd;   /* deep violet — AI/creative */
+      --color-glow:      rgba(201,169,110,0.12);
+
+      --font-display: 'Cormorant Garamond', Georgia, serif;
+      --font-body:    'DM Sans', sans-serif;
+
+      --radius-sm:  6px;
+      --radius-md:  12px;
+      --radius-lg:  20px;
+
+      --shadow-card: 0 1px 3px rgba(0,0,0,0.4), 0 8px 32px rgba(0,0,0,0.3);
+      --shadow-glow: 0 0 60px rgba(201,169,110,0.15);
+
+      --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-in:  cubic-bezier(0.4, 0, 1, 1);
+    }
+
+    /* ── RESET & BASE ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-body);
+      background: var(--color-bg);
+      color: var(--color-text);
+      font-size: 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    img { display: block; max-width: 100%; }
+    a { color: inherit; text-decoration: none; }
+
+    /* ── SKIP LINK (accessibility) ── */
+    .skip-link {
+      position: absolute;
+      top: -100%;
+      left: 1rem;
+      background: var(--color-accent);
+      color: #000;
+      padding: 0.5rem 1rem;
+      border-radius: var(--radius-sm);
+      font-weight: 500;
+      z-index: 9999;
+      transition: top 0.2s;
+    }
+    .skip-link:focus { top: 1rem; }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.25rem 2rem;
+      background: rgba(9,9,11,0.8);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--color-border);
+    }
+    .nav-logo {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      color: var(--color-text);
+    }
+    .nav-logo span { color: var(--color-accent); }
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 0.875rem;
+      font-weight: 400;
+      color: var(--color-muted);
+      transition: color 0.2s var(--ease-out);
+      cursor: pointer;
+    }
+    .nav-links a:hover,
+    .nav-links a:focus-visible { color: var(--color-text); outline: none; }
+    .nav-links a:focus-visible { outline: 2px solid var(--color-accent); border-radius: 3px; }
+    .nav-cta {
+      font-size: 0.875rem;
+      font-weight: 500;
+      padding: 0.5rem 1.25rem;
+      background: var(--color-accent);
+      color: #09090b;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: opacity 0.2s var(--ease-out), transform 0.15s var(--ease-out);
+      touch-action: manipulation;
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+    }
+    .nav-cta:hover { opacity: 0.9; }
+    .nav-cta:active { transform: scale(0.97); }
+    .nav-cta:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 3px; }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 8rem 2rem 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Ambient background layers */
+    #hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% 0%, rgba(201,169,110,0.08) 0%, transparent 70%),
+        radial-gradient(ellipse 60% 40% at 80% 80%, rgba(124,111,205,0.06) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    /* Film grain */
+    #hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      opacity: 0.4;
+      pointer-events: none;
+    }
+
+    .hero-eyebrow {
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--color-accent);
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      animation: fadeUp 0.8s var(--ease-out) 0.1s forwards;
+    }
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(3rem, 8vw, 7rem);
+      font-weight: 300;
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      margin-bottom: 1.5rem;
+      max-width: 14ch;
+      opacity: 0;
+      animation: fadeUp 0.9s var(--ease-out) 0.25s forwards;
+    }
+    .hero-title em {
+      font-style: italic;
+      color: var(--color-accent);
+    }
+    .hero-sub {
+      font-size: 1.0625rem;
+      color: var(--color-muted);
+      max-width: 46ch;
+      line-height: 1.7;
+      margin-bottom: 2.5rem;
+      opacity: 0;
+      animation: fadeUp 0.9s var(--ease-out) 0.4s forwards;
+    }
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      opacity: 0;
+      animation: fadeUp 0.9s var(--ease-out) 0.55s forwards;
+    }
+
+    /* ── BUTTONS ── */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.75rem;
+      border-radius: var(--radius-sm);
+      font-family: var(--font-body);
+      font-size: 0.9375rem;
+      font-weight: 500;
+      cursor: pointer;
+      border: none;
+      touch-action: manipulation;
+      min-height: 48px;
+      transition: all 0.2s var(--ease-out);
+    }
+    .btn-primary {
+      background: var(--color-accent);
+      color: #09090b;
+    }
+    .btn-primary:hover { opacity: 0.88; transform: translateY(-1px); box-shadow: 0 8px 24px rgba(201,169,110,0.25); }
+    .btn-primary:active { transform: scale(0.97) translateY(0); }
+    .btn-primary:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 3px; }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--color-text);
+      border: 1px solid var(--color-border);
+    }
+    .btn-ghost:hover { border-color: rgba(255,255,255,0.2); background: rgba(255,255,255,0.04); }
+    .btn-ghost:active { transform: scale(0.97); }
+    .btn-ghost:focus-visible { outline: 2px solid var(--color-text); outline-offset: 3px; }
+
+    /* ── SCROLL INDICATOR ── */
+    .scroll-indicator {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--color-muted);
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      opacity: 0;
+      animation: fadeUp 1s var(--ease-out) 1s forwards;
+    }
+    .scroll-line {
+      width: 1px;
+      height: 40px;
+      background: linear-gradient(to bottom, var(--color-muted), transparent);
+      animation: scrollPulse 2s ease-in-out infinite;
+    }
+
+    /* ── REEL STRIP ── */
+    .reel-strip {
+      width: 100%;
+      overflow: hidden;
+      border-top: 1px solid var(--color-border);
+      border-bottom: 1px solid var(--color-border);
+      background: var(--color-surface);
+      padding: 1rem 0;
+    }
+    .reel-track {
+      display: flex;
+      gap: 2rem;
+      width: max-content;
+      animation: marquee 30s linear infinite;
+    }
+    .reel-strip:hover .reel-track { animation-play-state: paused; }
+    .reel-item {
+      font-family: var(--font-display);
+      font-size: 0.875rem;
+      font-style: italic;
+      color: var(--color-muted);
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .reel-dot {
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: var(--color-accent);
+      flex-shrink: 0;
+    }
+
+    /* ── SECTION SHARED ── */
+    section { padding: 6rem 2rem; }
+    .container { max-width: 1100px; margin: 0 auto; }
+    .section-label {
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--color-accent);
+      margin-bottom: 1rem;
+    }
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4vw, 3.25rem);
+      font-weight: 300;
+      line-height: 1.1;
+      margin-bottom: 1.25rem;
+    }
+    .section-title em { font-style: italic; color: var(--color-accent); }
+    .section-body {
+      color: var(--color-muted);
+      max-width: 52ch;
+      line-height: 1.75;
+    }
+
+    /* ── SERVICES GRID ── */
+    #services { background: var(--color-surface); }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5px;
+      margin-top: 4rem;
+      background: var(--color-border);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+    }
+    .service-card {
+      background: var(--color-surface);
+      padding: 2.5rem;
+      position: relative;
+      transition: background 0.25s var(--ease-out);
+    }
+    .service-card:hover { background: var(--color-surface2); }
+    .service-icon {
+      width: 44px;
+      height: 44px;
+      margin-bottom: 1.5rem;
+      color: var(--color-accent);
+    }
+    .service-name {
+      font-family: var(--font-display);
+      font-size: 1.375rem;
+      font-weight: 400;
+      margin-bottom: 0.75rem;
+    }
+    .service-desc {
+      font-size: 0.9rem;
+      color: var(--color-muted);
+      line-height: 1.7;
+    }
+    .service-tag {
+      display: inline-block;
+      margin-top: 1.5rem;
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--color-accent2);
+      background: rgba(124,111,205,0.1);
+      padding: 0.25rem 0.625rem;
+      border-radius: 100px;
+    }
+
+    /* ── STATS ROW ── */
+    #stats {
+      padding: 4rem 2rem;
+      border-top: 1px solid var(--color-border);
+      border-bottom: 1px solid var(--color-border);
+    }
+    .stats-row {
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+      gap: 2rem;
+      text-align: center;
+    }
+    .stat-item {}
+    .stat-number {
+      font-family: var(--font-display);
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-weight: 300;
+      color: var(--color-accent);
+      line-height: 1;
+    }
+    .stat-label {
+      font-size: 0.8125rem;
+      color: var(--color-muted);
+      margin-top: 0.5rem;
+      letter-spacing: 0.05em;
+    }
+
+    /* ── PROCESS ── */
+    #process { background: var(--color-bg); }
+    .process-list {
+      margin-top: 4rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .process-step {
+      display: grid;
+      grid-template-columns: 60px 1fr;
+      gap: 2rem;
+      padding: 2rem 0;
+      border-bottom: 1px solid var(--color-border);
+      align-items: start;
+    }
+    .process-step:last-child { border-bottom: none; }
+    .step-num {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--color-accent);
+      opacity: 0.5;
+      padding-top: 0.25rem;
+    }
+    .step-content {}
+    .step-title {
+      font-family: var(--font-display);
+      font-size: 1.375rem;
+      font-weight: 400;
+      margin-bottom: 0.5rem;
+    }
+    .step-desc {
+      font-size: 0.9rem;
+      color: var(--color-muted);
+      line-height: 1.7;
+      max-width: 56ch;
+    }
+
+    /* ── CTA SECTION ── */
+    #cta {
+      background: var(--color-surface);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    #cta::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 70% 70% at 50% 50%, rgba(201,169,110,0.07) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .cta-title {
+      font-family: var(--font-display);
+      font-size: clamp(2.5rem, 5vw, 4.5rem);
+      font-weight: 300;
+      line-height: 1.1;
+      margin-bottom: 1.5rem;
+    }
+    .cta-title em { font-style: italic; color: var(--color-accent); }
+    .cta-sub {
+      color: var(--color-muted);
+      max-width: 44ch;
+      margin: 0 auto 2.5rem;
+      line-height: 1.7;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 3rem 2rem;
+      border-top: 1px solid var(--color-border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .footer-logo {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 600;
+    }
+    .footer-logo span { color: var(--color-accent); }
+    .footer-copy {
+      font-size: 0.8125rem;
+      color: var(--color-muted);
+    }
+    .footer-links {
+      display: flex;
+      gap: 1.5rem;
+      list-style: none;
+    }
+    .footer-links a {
+      font-size: 0.8125rem;
+      color: var(--color-muted);
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--color-text); }
+    .footer-links a:focus-visible { outline: 2px solid var(--color-accent); border-radius: 3px; }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.3; transform: scaleY(1); }
+      50%       { opacity: 1;   transform: scaleY(1.2); }
+    }
+
+    /* ── REDUCED MOTION ── */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+      .reel-track { animation: none; }
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.25rem; }
+      .nav-links { display: none; }
+      section { padding: 4rem 1.25rem; }
+      .process-step { grid-template-columns: 40px 1fr; gap: 1rem; }
+      footer { flex-direction: column; text-align: center; }
+      .footer-links { justify-content: center; }
+    }
+    @media (max-width: 480px) {
+      .hero-actions { flex-direction: column; align-items: stretch; }
+      .btn { justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <a href="#main" class="skip-link">Skip to main content</a>
+
+  <!-- NAV -->
+  <nav role="navigation" aria-label="Main navigation">
+    <div class="nav-logo">LTV Media<span>PRO</span></div>
+    <ul class="nav-links" role="list">
+      <li><a href="#services">Services</a></li>
+      <li><a href="#process">Process</a></li>
+      <li><a href="#cta">Contact</a></li>
+    </ul>
+    <a href="#cta" class="nav-cta" role="button">Work With Us</a>
+  </nav>
+
+  <main id="main">
+
+    <!-- HERO -->
+    <section id="hero" aria-label="Hero">
+      <p class="hero-eyebrow">AI Cinematography · Content Creation · Chicago & Lithuania</p>
+      <h1 class="hero-title">Where <em>Cinema</em> Meets Artificial Intelligence</h1>
+      <p class="hero-sub">LTV Media PRO crafts AI-generated cinematic content that moves audiences — from Chicago to Vilnius. Reels, brand films, and visual stories built for the algorithm and the soul.</p>
+      <div class="hero-actions">
+        <a href="#cta" class="btn btn-primary" role="button">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          Start a Project
+        </a>
+        <a href="#services" class="btn btn-ghost" role="button">See Our Work</a>
+      </div>
+      <div class="scroll-indicator" aria-hidden="true">
+        <div class="scroll-line"></div>
+        <span>Scroll</span>
+      </div>
+    </section>
+
+    <!-- REEL STRIP -->
+    <div class="reel-strip" aria-hidden="true">
+      <div class="reel-track">
+        <!-- duplicated for seamless loop -->
+        <span class="reel-item"><span class="reel-dot"></span>Seedance 2.0</span>
+        <span class="reel-item"><span class="reel-dot"></span>Veo 3.1 Fast</span>
+        <span class="reel-item"><span class="reel-dot"></span>Kling AI</span>
+        <span class="reel-item"><span class="reel-dot"></span>Nano Banana Pro</span>
+        <span class="reel-item"><span class="reel-dot"></span>Instagram Reels</span>
+        <span class="reel-item"><span class="reel-dot"></span>Brand Films</span>
+        <span class="reel-item"><span class="reel-dot"></span>Match Cut Edits</span>
+        <span class="reel-item"><span class="reel-dot"></span>CapCut Assembly</span>
+        <span class="reel-item"><span class="reel-dot"></span>Chicago · Vilnius · Tuscany</span>
+        <span class="reel-item"><span class="reel-dot"></span>Seedance 2.0</span>
+        <span class="reel-item"><span class="reel-dot"></span>Veo 3.1 Fast</span>
+        <span class="reel-item"><span class="reel-dot"></span>Kling AI</span>
+        <span class="reel-item"><span class="reel-dot"></span>Nano Banana Pro</span>
+        <span class="reel-item"><span class="reel-dot"></span>Instagram Reels</span>
+        <span class="reel-item"><span class="reel-dot"></span>Brand Films</span>
+        <span class="reel-item"><span class="reel-dot"></span>Match Cut Edits</span>
+        <span class="reel-item"><span class="reel-dot"></span>CapCut Assembly</span>
+        <span class="reel-item"><span class="reel-dot"></span>Chicago · Vilnius · Tuscany</span>
+      </div>
+    </div>
+
+    <!-- SERVICES -->
+    <section id="services" aria-labelledby="services-heading">
+      <div class="container">
+        <p class="section-label">What We Do</p>
+        <h2 id="services-heading" class="section-title">AI-Powered <em>Visual</em> Storytelling</h2>
+        <p class="section-body">We combine the latest generative AI tools with cinematic instinct to produce content that feels handcrafted — not machine-made.</p>
+
+        <div class="services-grid" role="list">
+
+          <article class="service-card" role="listitem">
+            <svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/><polygon points="10,8 16,12 10,16"/></svg>
+            <h3 class="service-name">AI Brand Films</h3>
+            <p class="service-desc">Cinematic short films built from AI-generated footage — Seedance 2.0, Veo, Kling. Narratives that carry weight and visual identity.</p>
+            <span class="service-tag">Storytelling</span>
+          </article>
+
+          <article class="service-card" role="listitem">
+            <svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+            <h3 class="service-name">Instagram Reels</h3>
+            <p class="service-desc">High-frequency content designed for reach. Hook-driven, algorithm-optimised, produced in volume without sacrificing craft.</p>
+            <span class="service-tag">Growth</span>
+          </article>
+
+          <article class="service-card" role="listitem">
+            <svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>
+            <h3 class="service-name">AI Image Campaigns</h3>
+            <p class="service-desc">Nano Banana Pro, ChatGPT Image, Gemini — custom character-consistent visual campaigns for brands and creators.</p>
+            <span class="service-tag">Creative</span>
+          </article>
+
+          <article class="service-card" role="listitem">
+            <svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+            <h3 class="service-name">Content Strategy</h3>
+            <p class="service-desc">Four-pillar content calendars, caption systems, hashtag architecture — built on real analytics, not guesswork.</p>
+            <span class="service-tag">Strategy</span>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- STATS -->
+    <section id="stats" aria-label="Key numbers">
+      <div class="container">
+        <div class="stats-row">
+          <div class="stat-item">
+            <div class="stat-number" aria-label="7 platforms">7</div>
+            <div class="stat-label">AI Generation Platforms</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number" aria-label="2 countries">2</div>
+            <div class="stat-label">Countries — Chicago & Lithuania</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number" aria-label="100 percent AI-native">100%</div>
+            <div class="stat-label">AI-Native Production</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number" aria-label="4 content pillars">4</div>
+            <div class="stat-label">Content Pillars</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROCESS -->
+    <section id="process" aria-labelledby="process-heading">
+      <div class="container">
+        <p class="section-label">How It Works</p>
+        <h2 id="process-heading" class="section-title">The <em>Process</em></h2>
+        <p class="section-body">Every project follows a deliberate four-step workflow — from brief to final cut.</p>
+
+        <ol class="process-list" aria-label="Production process steps">
+          <li class="process-step">
+            <span class="step-num" aria-hidden="true">01</span>
+            <div class="step-content">
+              <h3 class="step-title">Brief & Direction</h3>
+              <p class="step-desc">We define the visual universe — character consistency, location palette, mood, narrative arc. Every detail locked before generation begins.</p>
+            </div>
+          </li>
+          <li class="process-step">
+            <span class="step-num" aria-hidden="true">02</span>
+            <div class="step-content">
+              <h3 class="step-title">AI Generation</h3>
+              <p class="step-desc">Shot-by-shot prompt engineering across Seedance 2.0, Kling, Veo, and Nano Banana Pro. Platform-matched for the visual fingerprint required.</p>
+            </div>
+          </li>
+          <li class="process-step">
+            <span class="step-num" aria-hidden="true">03</span>
+            <div class="step-content">
+              <h3 class="step-title">Assembly & Edit</h3>
+              <p class="step-desc">CapCut assembly with match-cut precision, spin transitions, and pacing calibrated to platform retention curves.</p>
+            </div>
+          </li>
+          <li class="process-step">
+            <span class="step-num" aria-hidden="true">04</span>
+            <div class="step-content">
+              <h3 class="step-title">Publish & Optimise</h3>
+              <p class="step-desc">Caption systems, hashtag architecture, and posting cadence tuned to your audience geography — not just follower count.</p>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section id="cta" aria-labelledby="cta-heading">
+      <div class="container">
+        <h2 id="cta-heading" class="cta-title">Ready to Make Something <em>Unforgettable?</em></h2>
+        <p class="cta-sub">Whether it's a brand film, a Reels campaign, or a full content strategy — let's build it together.</p>
+        <div class="hero-actions" style="justify-content:center;">
+          <a href="mailto:hello@ltvmediapro.com" class="btn btn-primary" role="button">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            Get In Touch
+          </a>
+          <a href="https://instagram.com/ltvmediapro" class="btn btn-ghost" role="button" target="_blank" rel="noopener noreferrer">
+            @ltvmediapro
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer role="contentinfo">
+    <div class="footer-logo">LTV Media<span>PRO</span></div>
+    <ul class="footer-links" role="list">
+      <li><a href="#services">Services</a></li>
+      <li><a href="#process">Process</a></li>
+      <li><a href="https://instagram.com/ltvmediapro" target="_blank" rel="noopener noreferrer">Instagram</a></li>
+    </ul>
+    <p class="footer-copy">© 2026 LTV Media PRO · Chicago & Lithuania</p>
+  </footer>
+
+</body>
+</html>
