@@ -148,64 +148,123 @@
       align-items: center;
       justify-content: center;
       text-align: center;
-      padding: 8rem 2rem 4rem;
+      padding: 8rem 2rem 6rem;
       position: relative;
       overflow: hidden;
     }
 
-    /* Ambient background layers */
-    #hero::before {
-      content: '';
+    /* Animated ambient orbs */
+    .hero-orb {
       position: absolute;
-      inset: 0;
-      background:
-        radial-gradient(ellipse 80% 60% at 50% 0%, rgba(201,169,110,0.08) 0%, transparent 70%),
-        radial-gradient(ellipse 60% 40% at 80% 80%, rgba(124,111,205,0.06) 0%, transparent 60%);
+      border-radius: 50%;
+      filter: blur(90px);
       pointer-events: none;
+      will-change: transform;
     }
-    /* Film grain */
-    #hero::after {
-      content: '';
-      position: absolute;
-      inset: 0;
+    .hero-orb--1 {
+      width: 700px; height: 500px;
+      background: radial-gradient(circle, rgba(201,169,110,0.13) 0%, transparent 70%);
+      top: -8%; left: 50%; transform: translateX(-50%);
+      animation: orbDrift1 20s ease-in-out infinite;
+    }
+    .hero-orb--2 {
+      width: 520px; height: 420px;
+      background: radial-gradient(circle, rgba(124,111,205,0.1) 0%, transparent 70%);
+      bottom: 0; right: -8%;
+      animation: orbDrift2 25s ease-in-out infinite;
+    }
+    .hero-orb--3 {
+      width: 340px; height: 340px;
+      background: radial-gradient(circle, rgba(201,169,110,0.07) 0%, transparent 70%);
+      bottom: 18%; left: 2%;
+      animation: orbDrift3 18s ease-in-out infinite;
+    }
+    .hero-grain {
+      position: absolute; inset: 0;
       background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-      opacity: 0.4;
-      pointer-events: none;
+      opacity: 0.35; pointer-events: none;
     }
 
-    .hero-eyebrow {
-      font-size: 0.75rem;
-      font-weight: 500;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--color-accent);
-      margin-bottom: 1.5rem;
+    /* Cinematic corner marks */
+    .frame-mark {
+      position: absolute;
+      width: 28px; height: 28px;
+      pointer-events: none;
       opacity: 0;
-      animation: fadeUp 0.8s var(--ease-out) 0.1s forwards;
+      animation: fadeIn 0.8s var(--ease-out) 0.9s forwards;
     }
+    .frame-mark--tl { top: 1.5rem; left: 1.5rem; border-top: 1px solid rgba(201,169,110,0.4); border-left: 1px solid rgba(201,169,110,0.4); }
+    .frame-mark--tr { top: 1.5rem; right: 1.5rem; border-top: 1px solid rgba(201,169,110,0.4); border-right: 1px solid rgba(201,169,110,0.4); }
+    .frame-mark--bl { bottom: 1.5rem; left: 1.5rem; border-bottom: 1px solid rgba(201,169,110,0.4); border-left: 1px solid rgba(201,169,110,0.4); }
+    .frame-mark--br { bottom: 1.5rem; right: 1.5rem; border-bottom: 1px solid rgba(201,169,110,0.4); border-right: 1px solid rgba(201,169,110,0.4); }
+
+    /* Badge */
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--color-muted);
+      border: 1px solid var(--color-border);
+      padding: 0.4rem 0.9rem;
+      border-radius: 100px;
+      margin-bottom: 2.75rem;
+      background: rgba(255,255,255,0.02);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      opacity: 0;
+      animation: fadeUp 0.7s var(--ease-out) 0.1s forwards;
+    }
+    .hero-badge-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: #4ade80;
+      box-shadow: 0 0 8px rgba(74,222,128,0.65);
+      animation: pulseDot 2.5s ease-in-out infinite;
+      flex-shrink: 0;
+    }
+
+    /* Title — three-line split */
     .hero-title {
       font-family: var(--font-display);
-      font-size: clamp(3rem, 8vw, 7rem);
       font-weight: 300;
-      line-height: 1.05;
+      line-height: 1.0;
       letter-spacing: -0.02em;
-      margin-bottom: 1.5rem;
-      max-width: 14ch;
-      opacity: 0;
-      animation: fadeUp 0.9s var(--ease-out) 0.25s forwards;
+      margin-bottom: 2rem;
     }
-    .hero-title em {
+    .hero-title-row {
+      display: block;
+      opacity: 0;
+    }
+    .hero-title-row--1 {
+      font-size: clamp(1.75rem, 4.5vw, 4.5rem);
+      color: rgba(244,244,245,0.45);
+      animation: fadeUp 0.8s var(--ease-out) 0.25s forwards;
+    }
+    .hero-title-row--2 {
+      font-size: clamp(3.75rem, 15vw, 10rem);
       font-style: italic;
       color: var(--color-accent);
-    }
-    .hero-sub {
-      font-size: 1.0625rem;
-      color: var(--color-muted);
-      max-width: 46ch;
-      line-height: 1.7;
-      margin-bottom: 2.5rem;
-      opacity: 0;
+      line-height: 0.92;
       animation: fadeUp 0.9s var(--ease-out) 0.4s forwards;
+    }
+    .hero-title-row--3 {
+      font-size: clamp(1.75rem, 4.5vw, 4.5rem);
+      color: var(--color-text);
+      animation: fadeUp 0.8s var(--ease-out) 0.55s forwards;
+    }
+
+    .hero-sub {
+      font-size: 1rem;
+      color: var(--color-muted);
+      max-width: 44ch;
+      line-height: 1.8;
+      margin: 0 auto 2.5rem;
+      opacity: 0;
+      animation: fadeUp 0.8s var(--ease-out) 0.65s forwards;
     }
     .hero-actions {
       display: flex;
@@ -213,8 +272,25 @@
       flex-wrap: wrap;
       justify-content: center;
       opacity: 0;
-      animation: fadeUp 0.9s var(--ease-out) 0.55s forwards;
+      animation: fadeUp 0.8s var(--ease-out) 0.75s forwards;
     }
+
+    /* Meta strip */
+    .hero-meta {
+      display: flex;
+      align-items: center;
+      gap: 0.875rem;
+      margin-top: 3rem;
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(113,113,122,0.55);
+      opacity: 0;
+      animation: fadeUp 0.8s var(--ease-out) 0.9s forwards;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .hero-meta-sep { opacity: 0.3; }
 
     /* ── BUTTONS ── */
     .btn {
@@ -307,17 +383,17 @@
       align-items: center;
       gap: 0.5rem;
       color: var(--color-muted);
-      font-size: 0.75rem;
-      letter-spacing: 0.1em;
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
       opacity: 0;
-      animation: fadeUp 1s var(--ease-out) 1s forwards;
+      animation: fadeUp 1s var(--ease-out) 1.1s forwards;
     }
     .scroll-line {
       width: 1px;
-      height: 40px;
-      background: linear-gradient(to bottom, var(--color-muted), transparent);
-      animation: scrollPulse 2s ease-in-out infinite;
+      height: 36px;
+      background: linear-gradient(to bottom, transparent, var(--color-accent), transparent);
+      animation: scrollPulse 2.5s ease-in-out infinite;
     }
 
     /* ── REEL STRIP ── */
@@ -561,6 +637,10 @@
       from { opacity: 0; transform: translateY(20px); }
       to   { opacity: 1; transform: translateY(0); }
     }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
     @keyframes marquee {
       from { transform: translateX(0); }
       to   { transform: translateX(-50%); }
@@ -568,6 +648,23 @@
     @keyframes scrollPulse {
       0%, 100% { opacity: 0.3; transform: scaleY(1); }
       50%       { opacity: 1;   transform: scaleY(1.2); }
+    }
+    @keyframes orbDrift1 {
+      0%, 100% { transform: translateX(-50%) translateY(0) scale(1); }
+      33%       { transform: translateX(-48%) translateY(-28px) scale(1.04); }
+      66%       { transform: translateX(-52%) translateY(18px) scale(0.97); }
+    }
+    @keyframes orbDrift2 {
+      0%, 100% { transform: translateY(0) scale(1); }
+      50%       { transform: translateY(-38px) scale(1.07); }
+    }
+    @keyframes orbDrift3 {
+      0%, 100% { transform: translateY(0) scale(1); }
+      50%       { transform: translateY(28px) scale(1.1); }
+    }
+    @keyframes pulseDot {
+      0%, 100% { opacity: 1; box-shadow: 0 0 8px rgba(74,222,128,0.65); }
+      50%       { opacity: 0.55; box-shadow: 0 0 14px rgba(74,222,128,0.9); }
     }
 
     /* ── REDUCED MOTION ── */
@@ -585,6 +682,11 @@
       nav { padding: 1rem 1.25rem; }
       .nav-links { display: none; }
       section { padding: 4rem 1.25rem; }
+      .frame-mark { width: 20px; height: 20px; top: 1rem; bottom: 1rem; left: 1rem; right: 1rem; }
+      .frame-mark--tl { top: 1rem; left: 1rem; }
+      .frame-mark--tr { top: 1rem; right: 1rem; }
+      .frame-mark--bl { bottom: 1rem; left: 1rem; }
+      .frame-mark--br { bottom: 1rem; right: 1rem; }
       .process-step { grid-template-columns: 40px 1fr; gap: 1rem; }
       footer { flex-direction: column; text-align: center; }
       .footer-links { justify-content: center; }
@@ -592,6 +694,7 @@
     @media (max-width: 480px) {
       .hero-actions { flex-direction: column; align-items: stretch; }
       .btn { justify-content: center; }
+      .hero-meta { gap: 0.5rem; font-size: 0.65rem; }
     }
   </style>
 </head>
@@ -614,9 +717,34 @@
 
     <!-- HERO -->
     <section id="hero" aria-label="Hero">
-      <p class="hero-eyebrow">AI Cinematography · Content Creation · Chicago & Lithuania</p>
-      <h1 class="hero-title">Where <em>Cinema</em> Meets Artificial Intelligence</h1>
-      <p class="hero-sub">LTV Media PRO crafts AI-generated cinematic content that moves audiences — from Chicago to Vilnius. Reels, brand films, and visual stories built for the algorithm and the soul.</p>
+
+      <!-- Ambient background -->
+      <div class="hero-orb hero-orb--1" aria-hidden="true"></div>
+      <div class="hero-orb hero-orb--2" aria-hidden="true"></div>
+      <div class="hero-orb hero-orb--3" aria-hidden="true"></div>
+      <div class="hero-grain" aria-hidden="true"></div>
+
+      <!-- Cinematic corner marks -->
+      <div class="frame-mark frame-mark--tl" aria-hidden="true"></div>
+      <div class="frame-mark frame-mark--tr" aria-hidden="true"></div>
+      <div class="frame-mark frame-mark--bl" aria-hidden="true"></div>
+      <div class="frame-mark frame-mark--br" aria-hidden="true"></div>
+
+      <!-- Badge -->
+      <div class="hero-badge">
+        <span class="hero-badge-dot" aria-hidden="true"></span>
+        AI Video Agency · Chicago &amp; Lithuania
+      </div>
+
+      <!-- Title -->
+      <h1 class="hero-title">
+        <span class="hero-title-row hero-title-row--1">Where</span>
+        <span class="hero-title-row hero-title-row--2">Cinema</span>
+        <span class="hero-title-row hero-title-row--3">Meets AI</span>
+      </h1>
+
+      <p class="hero-sub">LTV Media PRO crafts AI-generated cinematic content that moves audiences — brand films, Instagram Reels, and visual campaigns built for the algorithm and the soul.</p>
+
       <div class="hero-actions">
         <a href="#cta" class="btn btn-primary" role="button">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
@@ -624,10 +752,21 @@
         </a>
         <a href="#services" class="btn btn-ghost" role="button">See Our Work</a>
       </div>
+
+      <!-- Meta strip -->
+      <div class="hero-meta" aria-hidden="true">
+        <span>7 AI Platforms</span>
+        <span class="hero-meta-sep">·</span>
+        <span>100% AI-Native</span>
+        <span class="hero-meta-sep">·</span>
+        <span>Seedance · Veo · Kling</span>
+      </div>
+
       <div class="scroll-indicator" aria-hidden="true">
         <div class="scroll-line"></div>
         <span>Scroll</span>
       </div>
+
     </section>
 
     <!-- REEL STRIP -->
