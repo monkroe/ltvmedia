@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en" data-theme="dark" class="scroll-smooth">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>LTV Media PRO — Brand Films That Feel Human</title>
-  <meta name="description" content="Cinematic brand films and social content for ambitious brands. Delivered in 5 days. Chicago & Lithuania." />
+  <meta name="description" content="Cinematic brand films and social content. Delivered in 5 days. Chicago & Lithuania." />
   <link rel="canonical" href="https://ltvmedia.net" />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://ltvmedia.net" />
@@ -14,26 +14,19 @@
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:site" content="@ltvmediapro" />
 
+  <!-- Fonts: Bodoni Moda + Jost (skill-recommended) -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,300;0,6..96,400;0,6..96,700;1,6..96,300;1,6..96,400;1,6..96,700&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet" />
 
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
       theme: {
         extend: {
-          colors: {
-            bg:       '#09090b',
-            surface:  '#111113',
-            surface2: '#18181b',
-            gold: { DEFAULT: '#c9a96e', light: '#d4a84b', dark: '#b08030' },
-            violet: '#7c6fcd',
-            muted:  '#71717a',
-          },
           fontFamily: {
-            display: ['"Cormorant Garamond"', 'Georgia', 'serif'],
-            sans:    ['"DM Sans"', 'sans-serif'],
+            display: ['"Bodoni Moda"', 'Georgia', 'serif'],
+            sans:    ['"Jost"', 'sans-serif'],
           },
         }
       }
@@ -41,150 +34,241 @@
   </script>
 
   <style>
-    /* Film grain */
-    body::after {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-      opacity: 0.28;
-      pointer-events: none;
-      z-index: 9999;
+    /* ═══════════════════════════════════════
+       CSS VARIABLES — skill palette
+       Dark: #0C0A09 bg, #1C1917 surface, #CA8A04 CTA
+       Light: #FAFAF9 bg, warm whites
+    ═══════════════════════════════════════ */
+    :root, [data-theme="dark"] {
+      --bg:          #0C0A09;
+      --surface:     #1C1917;
+      --surface2:    #292524;
+      --text:        #FAFAF9;
+      --muted:       #A8A29E;
+      --subtle:      #78716C;
+      --cta:         #CA8A04;
+      --cta-glow:    rgba(202,138,4,0.35);
+      --glass-bg:    rgba(255,255,255,0.06);
+      --glass-hover: rgba(255,255,255,0.10);
+      --glass-bdr:   rgba(255,255,255,0.12);
+      --glass-bdr2:  rgba(255,255,255,0.20);
+      --bdr:         rgba(255,255,255,0.09);
+      --blob-1:      rgba(202,138,4,0.18);
+      --blob-2:      rgba(192,132,252,0.14);
+      --blob-3:      rgba(56,189,248,0.10);
+      --marquee-dot: #CA8A04;
+    }
+    [data-theme="light"] {
+      --bg:          #FAFAF9;
+      --surface:     #F5F0EB;
+      --surface2:    #EDE8E0;
+      --text:        #0C0A09;
+      --muted:       #57534E;
+      --subtle:      #78716C;
+      --cta:         #92400E;
+      --cta-glow:    rgba(146,64,14,0.28);
+      --glass-bg:    rgba(255,255,255,0.75);
+      --glass-hover: rgba(255,255,255,0.92);
+      --glass-bdr:   rgba(0,0,0,0.09);
+      --glass-bdr2:  rgba(0,0,0,0.15);
+      --bdr:         rgba(0,0,0,0.09);
+      --blob-1:      rgba(202,138,4,0.22);
+      --blob-2:      rgba(167,139,250,0.18);
+      --blob-3:      rgba(56,189,248,0.14);
+      --marquee-dot: #92400E;
     }
 
-    /* Gold button */
-    .btn-gold {
-      background: linear-gradient(135deg, #d4a84b 0%, #c9a96e 45%, #b08030 100%);
-      color: #09090b;
+    /* ─── Theme transition ─── */
+    .theme-transitioning,
+    .theme-transitioning * {
+      transition:
+        background-color 0.35s ease,
+        color 0.35s ease,
+        border-color 0.35s ease,
+        box-shadow 0.35s ease !important;
+    }
+
+    /* ─── Base ─── */
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Jost', sans-serif;
+    }
+
+    /* ─── Liquid Glass (skill: backdrop-filter blur+saturate, border rgba) ─── */
+    .glass {
+      background: var(--glass-bg);
+      backdrop-filter: blur(16px) saturate(180%);
+      -webkit-backdrop-filter: blur(16px) saturate(180%);
+      border: 1px solid var(--glass-bdr);
+      transition: background 0.3s ease, border-color 0.3s ease;
+    }
+    .glass:hover { background: var(--glass-hover); }
+
+    /* Floating nav glass */
+    .glass-nav {
+      background: rgba(12,10,9,0.5);
+      backdrop-filter: blur(20px) saturate(200%);
+      -webkit-backdrop-filter: blur(20px) saturate(200%);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 14px;
+      transition: background 0.35s ease, border-color 0.35s ease;
+    }
+    [data-theme="light"] .glass-nav {
+      background: rgba(250,250,249,0.78);
+      border-color: rgba(0,0,0,0.09);
+    }
+
+    /* ─── CTA Button (skill CTA: #CA8A04) ─── */
+    .btn-cta {
+      background: linear-gradient(135deg, #D97706 0%, #CA8A04 45%, #92400E 100%);
+      color: #0C0A09;
       font-weight: 600;
-      letter-spacing: 0.03em;
+      font-family: 'Jost', sans-serif;
+      letter-spacing: 0.04em;
       position: relative;
       overflow: hidden;
-      box-shadow: 0 1px 0 rgba(255,255,255,0.18) inset, 0 4px 18px rgba(201,169,110,0.22);
-      transition: transform 0.2s cubic-bezier(0.16,1,0.3,1), box-shadow 0.2s cubic-bezier(0.16,1,0.3,1);
+      box-shadow: 0 1px 0 rgba(255,255,255,0.2) inset, 0 4px 20px var(--cta-glow);
+      transition: transform 0.22s cubic-bezier(0.16,1,0.3,1), box-shadow 0.22s;
     }
-    .btn-gold::before {
+    .btn-cta::before {
       content: '';
-      position: absolute;
-      inset: 0;
+      position: absolute; inset: 0;
       background: linear-gradient(105deg, transparent 30%, rgba(255,255,255,0.22) 50%, transparent 70%);
       transform: translateX(-100%);
       transition: transform 0.55s cubic-bezier(0.16,1,0.3,1);
     }
-    .btn-gold:hover::before { transform: translateX(100%); }
-    .btn-gold:hover {
+    .btn-cta:hover::before { transform: translateX(100%); }
+    .btn-cta:hover {
       transform: translateY(-2px);
-      box-shadow: 0 1px 0 rgba(255,255,255,0.18) inset, 0 0 0 1px rgba(201,169,110,0.35),
-                  0 8px 28px rgba(201,169,110,0.38), 0 20px 48px rgba(201,169,110,0.15);
+      box-shadow:
+        0 1px 0 rgba(255,255,255,0.2) inset,
+        0 0 0 1px var(--cta-glow),
+        0 8px 30px var(--cta-glow),
+        0 24px 52px rgba(202,138,4,0.16);
     }
-    .btn-gold:active { transform: scale(0.97) translateY(0); }
-    .btn-gold:focus-visible { outline: 2px solid #c9a96e; outline-offset: 3px; }
+    .btn-cta:active { transform: scale(0.97) translateY(0); box-shadow: none; }
+    .btn-cta:focus-visible { outline: 2px solid var(--cta); outline-offset: 3px; }
 
     /* Ghost button */
     .btn-ghost {
-      background: rgba(255,255,255,0.03);
-      color: #f4f4f5;
-      border: 1px solid rgba(255,255,255,0.12);
-      font-weight: 600;
-      letter-spacing: 0.03em;
+      background: var(--glass-bg);
+      color: var(--text);
+      border: 1px solid var(--glass-bdr2);
+      font-weight: 500;
+      font-family: 'Jost', sans-serif;
+      letter-spacing: 0.04em;
       position: relative;
       overflow: hidden;
-      box-shadow: 0 1px 0 rgba(255,255,255,0.06) inset;
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      transition: transform 0.2s cubic-bezier(0.16,1,0.3,1), box-shadow 0.2s cubic-bezier(0.16,1,0.3,1),
-                  border-color 0.2s, background 0.2s;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      transition: transform 0.22s cubic-bezier(0.16,1,0.3,1), background 0.2s, border-color 0.2s;
     }
     .btn-ghost::before {
       content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(105deg, transparent 30%, rgba(255,255,255,0.08) 50%, transparent 70%);
+      position: absolute; inset: 0;
+      background: linear-gradient(105deg, transparent 30%, rgba(255,255,255,0.09) 50%, transparent 70%);
       transform: translateX(-100%);
       transition: transform 0.55s cubic-bezier(0.16,1,0.3,1);
     }
     .btn-ghost:hover::before { transform: translateX(100%); }
     .btn-ghost:hover {
-      border-color: rgba(255,255,255,0.28);
-      background: rgba(255,255,255,0.07);
       transform: translateY(-2px);
-      box-shadow: 0 1px 0 rgba(255,255,255,0.1) inset, 0 8px 24px rgba(0,0,0,0.25),
-                  0 0 0 1px rgba(255,255,255,0.1);
+      background: var(--glass-hover);
+      border-color: var(--glass-bdr2);
     }
     .btn-ghost:active { transform: scale(0.97) translateY(0); }
-    .btn-ghost:focus-visible { outline: 2px solid #f4f4f5; outline-offset: 3px; }
+    .btn-ghost:focus-visible { outline: 2px solid var(--text); outline-offset: 3px; }
 
-    /* Orb keyframes */
-    @keyframes orbDrift1 {
-      0%,100% { transform: translateX(-50%) translateY(0) scale(1); }
-      33%      { transform: translateX(-48%) translateY(-28px) scale(1.04); }
-      66%      { transform: translateX(-52%) translateY(18px) scale(0.97); }
+    /* ─── Iridescent blobs (skill: iridescent gradients, fluid animations 400-600ms) ─── */
+    @keyframes blobFloat1 {
+      0%,100% { transform: translate(0,0) scale(1); }
+      33%      { transform: translate(-30px,-40px) scale(1.05); }
+      66%      { transform: translate(22px,28px) scale(0.97); }
     }
-    @keyframes orbDrift2 {
-      0%,100% { transform: translateY(0) scale(1); }
-      50%      { transform: translateY(-38px) scale(1.07); }
+    @keyframes blobFloat2 {
+      0%,100% { transform: translate(0,0) scale(1); }
+      50%      { transform: translate(38px,-50px) scale(1.08); }
     }
-    @keyframes orbDrift3 {
-      0%,100% { transform: translateY(0) scale(1); }
-      50%      { transform: translateY(28px) scale(1.1); }
+    @keyframes blobFloat3 {
+      0%,100% { transform: translate(0,0) scale(1); }
+      50%      { transform: translate(-22px,32px) scale(1.06); }
     }
-    @keyframes pulseDot {
-      0%,100% { opacity: 1;    box-shadow: 0 0 8px rgba(74,222,128,0.65); }
-      50%      { opacity: 0.55; box-shadow: 0 0 14px rgba(74,222,128,0.9); }
+    @keyframes iridShift {
+      0%,100% { filter: hue-rotate(0deg) blur(80px) brightness(1); }
+      50%      { filter: hue-rotate(35deg) blur(88px) brightness(1.15); }
     }
+    @keyframes iridShift2 {
+      0%,100% { filter: hue-rotate(0deg) blur(90px) brightness(1); }
+      50%      { filter: hue-rotate(-25deg) blur(100px) brightness(1.12); }
+    }
+
+    .blob { animation-timing-function: ease-in-out; animation-iteration-count: infinite; }
+    .blob-1 { animation: blobFloat1 22s ease-in-out infinite, iridShift 11s ease-in-out infinite; }
+    .blob-2 { animation: blobFloat2 28s ease-in-out infinite, iridShift2 15s ease-in-out infinite; animation-delay: -6s, -4s; }
+    .blob-3 { animation: blobFloat3 19s ease-in-out infinite; animation-delay: -10s; }
+
+    /* ─── Theme toggle (Magic MCP: spring cubic-bezier, localStorage) ─── */
+    .theme-btn {
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      position: relative; overflow: hidden;
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-bdr);
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .theme-btn:hover { background: var(--glass-hover); }
+    .theme-btn:focus-visible { outline: 2px solid var(--cta); outline-offset: 2px; }
+    .theme-btn svg {
+      position: absolute;
+      transition: transform 0.35s cubic-bezier(0.34,1.56,0.64,1),
+                  opacity 0.25s ease;
+    }
+    .sun-icon  { transform: scale(1) translateY(0); opacity: 1; }
+    .moon-icon { transform: scale(0.5) translateY(16px); opacity: 0; }
+    [data-theme="light"] .sun-icon  { transform: scale(0.5) translateY(-16px); opacity: 0; }
+    [data-theme="light"] .moon-icon { transform: scale(1) translateY(0); opacity: 1; }
+
+    /* ─── Marquee ─── */
     @keyframes marquee {
       from { transform: translateX(0); }
       to   { transform: translateX(-50%); }
     }
+    .marquee-track { animation: marquee 40s linear infinite; }
+    .marquee-strip:hover .marquee-track { animation-play-state: paused; }
+
+    /* ─── Scroll indicator ─── */
     @keyframes scrollPulse {
       0%,100% { opacity: 0.3; }
       50%      { opacity: 1; }
     }
-
-    .orb-1 { animation: orbDrift1 20s ease-in-out infinite; }
-    .orb-2 { animation: orbDrift2 25s ease-in-out infinite; }
-    .orb-3 { animation: orbDrift3 18s ease-in-out infinite; }
-    .pulse-dot  { animation: pulseDot 2.5s ease-in-out infinite; }
-    .marquee-track { animation: marquee 40s linear infinite; }
-    .marquee-strip:hover .marquee-track { animation-play-state: paused; }
     .scroll-pulse { animation: scrollPulse 2.5s ease-in-out infinite; }
 
-    /* Nav glass on scroll */
-    .nav-scrolled {
-      background: rgba(9,9,11,0.92) !important;
-      box-shadow: 0 1px 0 rgba(255,255,255,0.07);
+    /* ─── Live badge dot ─── */
+    @keyframes pulseDot {
+      0%,100% { box-shadow: 0 0 0 0 rgba(74,222,128,0.6); }
+      50%      { box-shadow: 0 0 0 5px rgba(74,222,128,0); }
+    }
+    .live-dot { animation: pulseDot 2.2s ease-in-out infinite; }
+
+    /* ─── Chromatic aberration on hover (skill: chromatic aberration) ─── */
+    .chroma:hover {
+      filter: drop-shadow(1px 0 0 rgba(202,138,4,0.45))
+              drop-shadow(-1px 0 0 rgba(192,132,252,0.45));
     }
 
-    /* Pricing featured ring */
-    .pricing-featured {
-      box-shadow: 0 0 0 1px rgba(201,169,110,0.3), 0 24px 64px rgba(201,169,110,0.1);
-    }
-
-    /* Service card hover */
-    .service-card { transition: background 0.25s cubic-bezier(0.16,1,0.3,1); }
-    .service-card:hover { background: #18181b; }
-
-    /* Case study card hover */
-    .case-card {
-      transition: transform 0.3s cubic-bezier(0.16,1,0.3,1), box-shadow 0.3s;
-    }
-    .case-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 20px 48px rgba(0,0,0,0.4);
-    }
-
-    /* Process connector line */
+    /* ─── Process connector ─── */
     .process-line {
-      position: absolute;
-      left: 19px;
-      top: 42px;
-      bottom: -2.5rem;
+      position: absolute; left: 19px; top: 44px; bottom: -2.5rem;
       width: 1px;
-      background: linear-gradient(to bottom, rgba(201,169,110,0.3), rgba(201,169,110,0.03));
+      background: linear-gradient(to bottom, rgba(202,138,4,0.4), rgba(202,138,4,0.03));
     }
     .process-item:last-child .process-line { display: none; }
 
-    /* Reduced motion */
+    /* ─── Reduced motion (skill: critical UX rule) ─── */
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after {
         animation-duration: 0.01ms !important;
@@ -192,47 +276,76 @@
         transition-duration: 0.01ms !important;
       }
     }
+
+    /* ─── Mobile menu slide ─── */
+    #mobile-menu {
+      max-height: 0; overflow: hidden;
+      transition: max-height 0.4s cubic-bezier(0.16,1,0.3,1);
+    }
+    #mobile-menu.open { max-height: 400px; }
+
+    /* ─── Parallax wrapper ─── */
+    .parallax-bg { will-change: transform; }
   </style>
 </head>
 
-<body class="bg-bg text-[#f4f4f5] font-sans antialiased overflow-x-hidden">
+<body class="antialiased overflow-x-hidden font-sans min-h-screen">
 
-  <a href="#main" class="sr-only focus-visible:not-sr-only focus-visible:fixed focus-visible:top-4 focus-visible:left-4 focus-visible:z-[9999] focus-visible:bg-gold focus-visible:text-bg focus-visible:px-4 focus-visible:py-2 focus-visible:rounded focus-visible:font-semibold">
-    Skip to content
-  </a>
+  <a href="#main" class="sr-only focus-visible:not-sr-only focus-visible:fixed focus-visible:top-4 focus-visible:left-4 focus-visible:z-[9999] focus-visible:px-4 focus-visible:py-2 focus-visible:rounded focus-visible:font-semibold"
+     style="background:var(--cta);color:#0C0A09">Skip to content</a>
 
-  <!-- NAV -->
-  <header id="nav" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
-    <nav class="flex items-center justify-between px-6 md:px-10 py-5" role="navigation" aria-label="Main navigation">
-      <a href="#" class="font-display text-xl font-semibold tracking-wide focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold rounded">
-        LTV Media<span class="text-gold">PRO</span>
+  <!-- ═══════════════════════════════════
+       NAV — floating glass (skill: top-4 spacing)
+  ═══════════════════════════════════ -->
+  <header class="fixed top-4 left-4 right-4 z-50" role="banner">
+    <nav class="glass-nav flex items-center justify-between px-5 py-3.5" role="navigation" aria-label="Main navigation">
+
+      <a href="#" class="font-display text-lg font-bold tracking-wide focus-visible:outline-none focus-visible:ring-2 rounded"
+         style="color:var(--text)">
+        LTV Media<span style="color:var(--cta)">PRO</span>
       </a>
 
-      <ul class="hidden md:flex items-center gap-8 list-none" role="list">
-        <li><a href="#services" class="text-sm text-muted hover:text-[#f4f4f5] transition-colors duration-200 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold rounded px-1">Services</a></li>
-        <li><a href="#work"     class="text-sm text-muted hover:text-[#f4f4f5] transition-colors duration-200 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold rounded px-1">Work</a></li>
-        <li><a href="#pricing"  class="text-sm text-muted hover:text-[#f4f4f5] transition-colors duration-200 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold rounded px-1">Pricing</a></li>
+      <!-- Desktop links -->
+      <ul class="hidden md:flex items-center gap-7 list-none" role="list">
+        <li><a href="#services" class="text-sm font-medium transition-colors duration-200 cursor-pointer focus-visible:outline-none focus-visible:ring-2 rounded px-1"
+               style="color:var(--muted)" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--muted)'">Services</a></li>
+        <li><a href="#work"     class="text-sm font-medium transition-colors duration-200 cursor-pointer focus-visible:outline-none focus-visible:ring-2 rounded px-1"
+               style="color:var(--muted)" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--muted)'">Work</a></li>
+        <li><a href="#process"  class="text-sm font-medium transition-colors duration-200 cursor-pointer focus-visible:outline-none focus-visible:ring-2 rounded px-1"
+               style="color:var(--muted)" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--muted)'">Process</a></li>
       </ul>
 
-      <a href="#contact" class="hidden md:inline-flex items-center gap-2 btn-gold px-5 py-2.5 rounded text-sm cursor-pointer min-h-[44px]">
-        Book a Free Call
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-      </a>
+      <div class="flex items-center gap-3">
+        <!-- Theme toggle (Magic MCP pattern: spring animation, localStorage) -->
+        <button id="theme-toggle" class="theme-btn" aria-label="Toggle light/dark mode">
+          <svg class="sun-icon w-[18px] h-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="color:var(--text)"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+          <svg class="moon-icon w-[18px] h-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="color:var(--text)"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
 
-      <button id="menu-toggle" class="md:hidden flex flex-col gap-[5px] p-2 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold rounded" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="mobile-menu">
-        <span id="bar1" class="w-6 h-px bg-[#f4f4f5] block transition-all duration-300"></span>
-        <span id="bar2" class="w-6 h-px bg-[#f4f4f5] block transition-all duration-300"></span>
-        <span id="bar3" class="w-4 h-px bg-[#f4f4f5] block transition-all duration-300 ml-auto"></span>
-      </button>
+        <!-- Desktop CTA -->
+        <a href="#contact" class="hidden md:inline-flex items-center gap-2 btn-cta px-5 py-2.5 rounded-lg text-sm cursor-pointer min-h-[44px]">
+          Book a Free Call
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+
+        <!-- Mobile hamburger -->
+        <button id="menu-toggle" class="md:hidden flex flex-col gap-[5px] p-1.5 cursor-pointer focus-visible:outline-none focus-visible:ring-2 rounded"
+                style="color:var(--text)" aria-label="Toggle menu" aria-expanded="false" aria-controls="mobile-menu">
+          <span id="bar1" class="w-5 h-px block transition-all duration-300" style="background:var(--text)"></span>
+          <span id="bar2" class="w-5 h-px block transition-all duration-300" style="background:var(--text)"></span>
+          <span id="bar3" class="w-3 h-px block transition-all duration-300 ml-auto" style="background:var(--text)"></span>
+        </button>
+      </div>
     </nav>
 
-    <div id="mobile-menu" class="hidden md:hidden bg-surface border-t border-white/[0.07] px-6 pb-6">
-      <ul class="flex flex-col gap-1 pt-4 list-none" role="list">
-        <li><a href="#services" class="block text-muted hover:text-[#f4f4f5] py-2 transition-colors cursor-pointer">Services</a></li>
-        <li><a href="#work"     class="block text-muted hover:text-[#f4f4f5] py-2 transition-colors cursor-pointer">Work</a></li>
-        <li><a href="#pricing"  class="block text-muted hover:text-[#f4f4f5] py-2 transition-colors cursor-pointer">Pricing</a></li>
-        <li class="pt-3">
-          <a href="#contact" class="inline-flex items-center justify-center gap-2 btn-gold px-5 py-3 rounded text-sm cursor-pointer w-full">
+    <!-- Mobile menu -->
+    <div id="mobile-menu" class="glass-nav mt-2 overflow-hidden" style="border-radius:14px">
+      <ul class="flex flex-col gap-1 px-5 py-4 list-none" role="list">
+        <li><a href="#services" class="block py-2 text-sm font-medium cursor-pointer transition-colors" style="color:var(--muted)">Services</a></li>
+        <li><a href="#work"     class="block py-2 text-sm font-medium cursor-pointer transition-colors" style="color:var(--muted)">Work</a></li>
+        <li><a href="#process"  class="block py-2 text-sm font-medium cursor-pointer transition-colors" style="color:var(--muted)">Process</a></li>
+        <li class="pt-2">
+          <a href="#contact" class="flex items-center justify-center btn-cta px-5 py-3 rounded-lg text-sm cursor-pointer w-full min-h-[44px]">
             Book a Free 20-min Call
           </a>
         </li>
@@ -242,188 +355,208 @@
 
   <main id="main">
 
-    <!-- ═══════════ HERO ═══════════ -->
-    <section id="hero" class="relative min-h-[100dvh] flex flex-col items-center justify-center text-center px-4 sm:px-6 pt-28 pb-24 overflow-hidden">
+    <!-- ═══════════════════════════════════
+         HERO — Video-First pattern (skill),
+         parallax blobs, Bodoni Moda
+    ═══════════════════════════════════ -->
+    <section id="hero" class="relative min-h-[100dvh] flex flex-col items-center justify-center text-center px-4 sm:px-6 pt-32 pb-24 overflow-hidden">
 
-      <div class="orb-1 absolute rounded-full pointer-events-none" aria-hidden="true"
-           style="width:700px;height:500px;top:-8%;left:50%;transform:translateX(-50%);filter:blur(90px);background:radial-gradient(circle,rgba(201,169,110,0.13) 0%,transparent 70%)"></div>
-      <div class="orb-2 absolute rounded-full pointer-events-none" aria-hidden="true"
-           style="width:520px;height:420px;bottom:0;right:-8%;filter:blur(90px);background:radial-gradient(circle,rgba(124,111,205,0.1) 0%,transparent 70%)"></div>
-      <div class="orb-3 absolute rounded-full pointer-events-none" aria-hidden="true"
-           style="width:340px;height:340px;bottom:18%;left:2%;filter:blur(90px);background:radial-gradient(circle,rgba(201,169,110,0.07) 0%,transparent 70%)"></div>
+      <!-- Iridescent blobs (skill: iridescent gradients, morphing shapes) -->
+      <div class="blob blob-1 parallax-bg absolute rounded-full pointer-events-none" aria-hidden="true"
+           style="width:650px;height:500px;top:-10%;left:50%;margin-left:-325px;background:radial-gradient(circle,var(--blob-1) 0%,transparent 70%)"></div>
+      <div class="blob blob-2 parallax-bg absolute rounded-full pointer-events-none" aria-hidden="true"
+           style="width:500px;height:420px;bottom:-5%;right:-8%;background:radial-gradient(circle,var(--blob-2) 0%,transparent 70%)"></div>
+      <div class="blob blob-3 parallax-bg absolute rounded-full pointer-events-none" aria-hidden="true"
+           style="width:320px;height:320px;bottom:20%;left:3%;background:radial-gradient(circle,var(--blob-3) 0%,transparent 70%)"></div>
 
-      <div class="frame-marks absolute inset-0 pointer-events-none" aria-hidden="true">
-        <span class="absolute top-6 left-6 w-7 h-7 border-t border-l border-gold/40"></span>
-        <span class="absolute top-6 right-6 w-7 h-7 border-t border-r border-gold/40"></span>
-        <span class="absolute bottom-6 left-6 w-7 h-7 border-b border-l border-gold/40"></span>
-        <span class="absolute bottom-6 right-6 w-7 h-7 border-b border-r border-gold/40"></span>
+      <!-- Cinematic frame marks -->
+      <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
+        <span class="absolute top-20 left-5 w-6 h-6 md:top-6 md:left-6 md:w-7 md:h-7" style="border-top:1px solid rgba(202,138,4,0.4);border-left:1px solid rgba(202,138,4,0.4)"></span>
+        <span class="absolute top-20 right-5 w-6 h-6 md:top-6 md:right-6 md:w-7 md:h-7" style="border-top:1px solid rgba(202,138,4,0.4);border-right:1px solid rgba(202,138,4,0.4)"></span>
+        <span class="absolute bottom-6 left-5 w-6 h-6 md:left-6 md:w-7 md:h-7" style="border-bottom:1px solid rgba(202,138,4,0.4);border-left:1px solid rgba(202,138,4,0.4)"></span>
+        <span class="absolute bottom-6 right-5 w-6 h-6 md:right-6 md:w-7 md:h-7" style="border-bottom:1px solid rgba(202,138,4,0.4);border-right:1px solid rgba(202,138,4,0.4)"></span>
       </div>
 
-      <div class="hero-badge inline-flex items-center gap-2 text-[0.7rem] font-medium tracking-[0.16em] uppercase text-muted border border-white/10 px-4 py-1.5 rounded-full mb-10 backdrop-blur-sm bg-white/[0.02]">
-        <span class="pulse-dot w-1.5 h-1.5 rounded-full bg-green-400 flex-shrink-0" aria-hidden="true" style="box-shadow:0 0 8px rgba(74,222,128,0.65)"></span>
-        AI Video Agency · Chicago &amp; Lithuania
+      <!-- Hero content -->
+      <div class="hero-content relative z-10 flex flex-col items-center">
+
+        <!-- Live badge -->
+        <div class="hero-badge inline-flex items-center gap-2 text-[0.68rem] font-medium tracking-[0.18em] uppercase glass px-4 py-1.5 rounded-full mb-10" style="color:var(--muted)">
+          <span class="live-dot w-1.5 h-1.5 rounded-full flex-shrink-0" style="background:#4ade80" aria-hidden="true"></span>
+          AI Video Agency · Chicago &amp; Lithuania
+        </div>
+
+        <!-- Headline — Bodoni Moda (skill typography) -->
+        <h1 class="font-display tracking-tight mb-8 max-w-4xl chroma">
+          <span class="hero-line-1 block font-light" style="font-size:clamp(1.4rem,3.8vw,3.75rem);color:var(--muted)">Brand Films That</span>
+          <span class="hero-line-2 block italic" style="font-size:clamp(3.25rem,13vw,9rem);line-height:0.9;color:var(--text)">Feel Human.</span>
+          <span class="hero-line-3 block font-light" style="font-size:clamp(1.4rem,3.8vw,3.75rem);color:var(--muted)">Delivered in 5 Days.</span>
+        </h1>
+
+        <!-- Sub — Jost body -->
+        <p class="hero-sub text-base md:text-lg leading-relaxed max-w-xl mx-auto mb-10" style="color:var(--muted)">
+          We produce cinematic brand content that builds audiences, drives bookings, and makes your brand unforgettable — without the 6-week production timeline.
+        </p>
+
+        <!-- Single CTA -->
+        <div class="hero-cta">
+          <a href="#contact" class="inline-flex items-center gap-2.5 btn-cta px-9 py-4 rounded-xl text-base cursor-pointer min-h-[54px]">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.63 19.79 19.79 0 01.01 1.01 2 2 0 012 0h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 14.92z"/></svg>
+            Book a Free 20-min Call
+          </a>
+        </div>
+
+        <p class="hero-trust mt-5 text-xs tracking-[0.14em] uppercase" style="color:var(--subtle)">
+          Chicago · Lithuania · 48h–5 Day Delivery
+        </p>
       </div>
 
-      <h1 class="hero-headline font-display font-light tracking-tight mb-8 max-w-5xl">
-        <span class="hero-line-1 block text-[#f4f4f5]/45" style="font-size:clamp(1.5rem,4vw,4rem)">Brand Films That</span>
-        <span class="hero-line-2 block italic text-gold leading-[0.92]" style="font-size:clamp(3.5rem,13vw,9rem)">Feel Human.</span>
-        <span class="hero-line-3 block text-[#f4f4f5]" style="font-size:clamp(1.5rem,4vw,4rem)">Delivered in 5 Days.</span>
-      </h1>
-
-      <p class="hero-sub text-muted text-base md:text-lg leading-relaxed max-w-xl mx-auto mb-10">
-        We produce cinematic brand content that builds audiences, drives bookings, and makes your brand unforgettable — without the 6-week production timeline.
-      </p>
-
-      <div class="hero-cta">
-        <a href="#contact" class="inline-flex items-center gap-2.5 btn-gold px-8 py-4 rounded text-base cursor-pointer min-h-[52px]">
-          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.63 19.79 19.79 0 01.01 1.01 2 2 0 012 0h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 14.92z"/></svg>
-          Book a Free 20-min Call
-        </a>
-      </div>
-
-      <p class="hero-trust mt-5 text-xs tracking-[0.14em] uppercase" style="color:rgba(113,113,122,0.5)">
-        Chicago · Lithuania · 48h–5 Day Delivery
-      </p>
-
-      <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-[0.65rem] tracking-[0.12em] uppercase" style="color:#71717a" aria-hidden="true">
-        <div class="scroll-pulse w-px h-9" style="background:linear-gradient(to bottom,transparent,#c9a96e,transparent)"></div>
+      <!-- Scroll indicator -->
+      <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-[0.65rem] tracking-[0.12em] uppercase" style="color:var(--subtle)" aria-hidden="true">
+        <div class="scroll-pulse w-px h-9" style="background:linear-gradient(to bottom,transparent,var(--cta),transparent)"></div>
         <span>Scroll</span>
       </div>
     </section>
 
     <!-- ═══════════ MARQUEE ═══════════ -->
-    <div class="marquee-strip border-y border-white/[0.07] bg-surface py-4 overflow-hidden" aria-hidden="true">
+    <div class="marquee-strip overflow-hidden py-4" style="border-top:1px solid var(--bdr);border-bottom:1px solid var(--bdr);background:var(--surface)" aria-hidden="true">
       <div class="marquee-track flex gap-8 w-max">
-        <span class="flex items-center gap-3 font-display italic text-sm text-muted whitespace-nowrap"><span class="w-1 h-1 rounded-full bg-gold flex-shrink-0"></span>Brand Films</span>
-        <span class="flex items-center gap-3 font-display italic text-sm text-muted whitespace-nowrap"><span class="w-1 h-1 rounded-full bg-gold flex-shrink-0"></span>Instagram Reels</span>
-        <span class="flex items-center gap-3 font-display italic text-sm text-muted whitespace-nowrap"><span class="w-1 h-1 rounded-full bg-gold flex-shrink-0"></span>Visual Campaigns</span>
-        <span class="flex items-center gap-3 font-display italic text-sm text-muted whitespace-nowrap"><span class="w-1 h-1 rounded-full bg-gold flex-shrink-0"></span>Content Strategy</span>
-        <span class="flex items-center gap-3 font-display italic text-sm text-muted whitespace-nowrap"><span class="w-1 h-1 rounded-full bg-gold flex-shrink-0"></span>5-Day Delivery</span>
-        <span class="flex items-center gap-3 font-display italic text-sm text-muted whitespace-nowrap"><span class="w-1 h-1 rounded-full bg-gold flex-shrink-0"></span>Chicago · Lithuania</span>
-        <span class="flex items-center gap-3 font-display italic text-sm text-muted whitespace-nowrap"><span class="w-1 h-1 rounded-full bg-gold flex-shrink-0"></span>Cinematic Production</span>
-        <span class="flex items-center gap-3 font-display italic text-sm text-muted whitespace-nowrap"><span class="w-1 h-1 rounded-full bg-gold flex-shrink-0"></span>Short-Form Content</span>
-        <span class="flex items-center gap-3 font-display italic text-sm text-muted whitespace-nowrap"><span class="w-1 h-1 rounded-full bg-gold flex-shrink-0"></span>Brand Films</span>
-        <span class="flex items-center gap-3 font-display italic text-sm text-muted whitespace-nowrap"><span class="w-1 h-1 rounded-full bg-gold flex-shrink-0"></span>Instagram Reels</span>
-        <span class="flex items-center gap-3 font-display italic text-sm text-muted whitespace-nowrap"><span class="w-1 h-1 rounded-full bg-gold flex-shrink-0"></span>Visual Campaigns</span>
-        <span class="flex items-center gap-3 font-display italic text-sm text-muted whitespace-nowrap"><span class="w-1 h-1 rounded-full bg-gold flex-shrink-0"></span>Content Strategy</span>
-        <span class="flex items-center gap-3 font-display italic text-sm text-muted whitespace-nowrap"><span class="w-1 h-1 rounded-full bg-gold flex-shrink-0"></span>5-Day Delivery</span>
-        <span class="flex items-center gap-3 font-display italic text-sm text-muted whitespace-nowrap"><span class="w-1 h-1 rounded-full bg-gold flex-shrink-0"></span>Chicago · Lithuania</span>
-        <span class="flex items-center gap-3 font-display italic text-sm text-muted whitespace-nowrap"><span class="w-1 h-1 rounded-full bg-gold flex-shrink-0"></span>Cinematic Production</span>
-        <span class="flex items-center gap-3 font-display italic text-sm text-muted whitespace-nowrap"><span class="w-1 h-1 rounded-full bg-gold flex-shrink-0"></span>Short-Form Content</span>
+        <span class="flex items-center gap-3 font-display italic text-sm whitespace-nowrap" style="color:var(--muted)"><span class="w-1 h-1 rounded-full flex-shrink-0" style="background:var(--marquee-dot)"></span>Brand Films</span>
+        <span class="flex items-center gap-3 font-display italic text-sm whitespace-nowrap" style="color:var(--muted)"><span class="w-1 h-1 rounded-full flex-shrink-0" style="background:var(--marquee-dot)"></span>Instagram Reels</span>
+        <span class="flex items-center gap-3 font-display italic text-sm whitespace-nowrap" style="color:var(--muted)"><span class="w-1 h-1 rounded-full flex-shrink-0" style="background:var(--marquee-dot)"></span>Visual Campaigns</span>
+        <span class="flex items-center gap-3 font-display italic text-sm whitespace-nowrap" style="color:var(--muted)"><span class="w-1 h-1 rounded-full flex-shrink-0" style="background:var(--marquee-dot)"></span>Content Strategy</span>
+        <span class="flex items-center gap-3 font-display italic text-sm whitespace-nowrap" style="color:var(--muted)"><span class="w-1 h-1 rounded-full flex-shrink-0" style="background:var(--marquee-dot)"></span>5-Day Delivery</span>
+        <span class="flex items-center gap-3 font-display italic text-sm whitespace-nowrap" style="color:var(--muted)"><span class="w-1 h-1 rounded-full flex-shrink-0" style="background:var(--marquee-dot)"></span>Chicago · Lithuania</span>
+        <span class="flex items-center gap-3 font-display italic text-sm whitespace-nowrap" style="color:var(--muted)"><span class="w-1 h-1 rounded-full flex-shrink-0" style="background:var(--marquee-dot)"></span>Cinematic Production</span>
+        <span class="flex items-center gap-3 font-display italic text-sm whitespace-nowrap" style="color:var(--muted)"><span class="w-1 h-1 rounded-full flex-shrink-0" style="background:var(--marquee-dot)"></span>Short-Form Content</span>
+        <!-- dupe -->
+        <span class="flex items-center gap-3 font-display italic text-sm whitespace-nowrap" style="color:var(--muted)"><span class="w-1 h-1 rounded-full flex-shrink-0" style="background:var(--marquee-dot)"></span>Brand Films</span>
+        <span class="flex items-center gap-3 font-display italic text-sm whitespace-nowrap" style="color:var(--muted)"><span class="w-1 h-1 rounded-full flex-shrink-0" style="background:var(--marquee-dot)"></span>Instagram Reels</span>
+        <span class="flex items-center gap-3 font-display italic text-sm whitespace-nowrap" style="color:var(--muted)"><span class="w-1 h-1 rounded-full flex-shrink-0" style="background:var(--marquee-dot)"></span>Visual Campaigns</span>
+        <span class="flex items-center gap-3 font-display italic text-sm whitespace-nowrap" style="color:var(--muted)"><span class="w-1 h-1 rounded-full flex-shrink-0" style="background:var(--marquee-dot)"></span>Content Strategy</span>
+        <span class="flex items-center gap-3 font-display italic text-sm whitespace-nowrap" style="color:var(--muted)"><span class="w-1 h-1 rounded-full flex-shrink-0" style="background:var(--marquee-dot)"></span>5-Day Delivery</span>
+        <span class="flex items-center gap-3 font-display italic text-sm whitespace-nowrap" style="color:var(--muted)"><span class="w-1 h-1 rounded-full flex-shrink-0" style="background:var(--marquee-dot)"></span>Chicago · Lithuania</span>
+        <span class="flex items-center gap-3 font-display italic text-sm whitespace-nowrap" style="color:var(--muted)"><span class="w-1 h-1 rounded-full flex-shrink-0" style="background:var(--marquee-dot)"></span>Cinematic Production</span>
+        <span class="flex items-center gap-3 font-display italic text-sm whitespace-nowrap" style="color:var(--muted)"><span class="w-1 h-1 rounded-full flex-shrink-0" style="background:var(--marquee-dot)"></span>Short-Form Content</span>
       </div>
     </div>
 
-    <!-- ═══════════ SERVICES ═══════════ -->
+    <!-- ═══════════════════════════════════
+         SERVICES — Liquid Glass cards
+    ═══════════════════════════════════ -->
     <section id="services" class="py-28 px-4 sm:px-6 lg:px-8">
       <div class="max-w-6xl mx-auto">
-        <div class="reveal-up">
-          <p class="text-[0.7rem] font-medium tracking-[0.2em] uppercase text-gold mb-3">What We Create</p>
-          <h2 class="font-display font-light tracking-tight mb-4" style="font-size:clamp(2rem,5vw,3.5rem)">
-            Content That <em class="italic text-gold">Converts</em>
+
+        <div class="reveal-up mb-16">
+          <p class="text-[0.68rem] font-medium tracking-[0.22em] uppercase mb-3" style="color:var(--cta)">What We Create</p>
+          <h2 class="font-display font-light tracking-tight mb-4" style="font-size:clamp(2rem,5vw,3.5rem);color:var(--text)">
+            Content That <em class="italic" style="color:var(--cta)">Converts</em>
           </h2>
-          <p class="text-muted max-w-lg leading-relaxed">We blend cinematic instinct with precision production to create content that feels handcrafted — not machine-made.</p>
+          <p class="max-w-lg leading-relaxed" style="color:var(--muted)">We blend cinematic instinct with precision production — content that feels handcrafted, not machine-made.</p>
         </div>
 
-        <div class="services-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-px mt-16 bg-white/[0.07] border border-white/[0.07] rounded-2xl overflow-hidden">
+        <div class="services-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-px overflow-hidden rounded-2xl" style="background:var(--bdr);border:1px solid var(--bdr)">
 
-          <article class="service-card bg-surface p-10">
-            <svg class="w-11 h-11 mb-6 text-gold" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/><polygon points="10,8 16,12 10,16"/></svg>
-            <h3 class="font-display text-2xl font-normal mb-3">Brand Films</h3>
-            <p class="text-muted text-sm leading-relaxed">Cinematic short films that carry your brand's voice — built with weight, visual identity, and narrative purpose.</p>
-            <span class="inline-block mt-6 text-[0.65rem] tracking-[0.1em] uppercase text-violet bg-violet/10 px-2.5 py-1 rounded-full">Storytelling</span>
+          <article class="glass p-10 rounded-none cursor-default">
+            <svg class="w-10 h-10 mb-6" style="color:var(--cta)" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/><polygon points="10,8 16,12 10,16"/></svg>
+            <h3 class="font-display text-2xl font-normal mb-3" style="color:var(--text)">Brand Films</h3>
+            <p class="text-sm leading-relaxed" style="color:var(--muted)">Cinematic short films that carry your brand's voice — built with weight, visual identity, and narrative purpose.</p>
+            <span class="inline-block mt-6 text-[0.62rem] tracking-[0.1em] uppercase px-2.5 py-1 rounded-full" style="color:#a78bfa;background:rgba(167,139,250,0.12)">Storytelling</span>
           </article>
 
-          <article class="service-card bg-surface p-10">
-            <svg class="w-11 h-11 mb-6 text-gold" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
-            <h3 class="font-display text-2xl font-normal mb-3">Instagram Reels</h3>
-            <p class="text-muted text-sm leading-relaxed">Hook-driven, algorithm-optimised Reels produced fast without sacrificing craft or your brand's voice.</p>
-            <span class="inline-block mt-6 text-[0.65rem] tracking-[0.1em] uppercase text-violet bg-violet/10 px-2.5 py-1 rounded-full">Growth</span>
+          <article class="glass p-10 rounded-none cursor-default">
+            <svg class="w-10 h-10 mb-6" style="color:var(--cta)" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+            <h3 class="font-display text-2xl font-normal mb-3" style="color:var(--text)">Instagram Reels</h3>
+            <p class="text-sm leading-relaxed" style="color:var(--muted)">Hook-driven, algorithm-optimised Reels produced fast without sacrificing craft or your brand's voice.</p>
+            <span class="inline-block mt-6 text-[0.62rem] tracking-[0.1em] uppercase px-2.5 py-1 rounded-full" style="color:#a78bfa;background:rgba(167,139,250,0.12)">Growth</span>
           </article>
 
-          <article class="service-card bg-surface p-10">
-            <svg class="w-11 h-11 mb-6 text-gold" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>
-            <h3 class="font-display text-2xl font-normal mb-3">Visual Campaigns</h3>
-            <p class="text-muted text-sm leading-relaxed">Character-consistent image campaigns for brands — built for launches, product drops, and paid ads.</p>
-            <span class="inline-block mt-6 text-[0.65rem] tracking-[0.1em] uppercase text-violet bg-violet/10 px-2.5 py-1 rounded-full">Creative</span>
+          <article class="glass p-10 rounded-none cursor-default">
+            <svg class="w-10 h-10 mb-6" style="color:var(--cta)" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>
+            <h3 class="font-display text-2xl font-normal mb-3" style="color:var(--text)">Visual Campaigns</h3>
+            <p class="text-sm leading-relaxed" style="color:var(--muted)">Character-consistent image campaigns — built for launches, product drops, and paid media.</p>
+            <span class="inline-block mt-6 text-[0.62rem] tracking-[0.1em] uppercase px-2.5 py-1 rounded-full" style="color:#a78bfa;background:rgba(167,139,250,0.12)">Creative</span>
           </article>
 
-          <article class="service-card bg-surface p-10">
-            <svg class="w-11 h-11 mb-6 text-gold" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
-            <h3 class="font-display text-2xl font-normal mb-3">Content Strategy</h3>
-            <p class="text-muted text-sm leading-relaxed">Four-pillar calendars, caption systems, and hashtag architecture built on real analytics — not guesswork.</p>
-            <span class="inline-block mt-6 text-[0.65rem] tracking-[0.1em] uppercase text-violet bg-violet/10 px-2.5 py-1 rounded-full">Strategy</span>
+          <article class="glass p-10 rounded-none cursor-default">
+            <svg class="w-10 h-10 mb-6" style="color:var(--cta)" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+            <h3 class="font-display text-2xl font-normal mb-3" style="color:var(--text)">Content Strategy</h3>
+            <p class="text-sm leading-relaxed" style="color:var(--muted)">Four-pillar calendars, caption systems, hashtag architecture — built on real analytics, not guesswork.</p>
+            <span class="inline-block mt-6 text-[0.62rem] tracking-[0.1em] uppercase px-2.5 py-1 rounded-full" style="color:#a78bfa;background:rgba(167,139,250,0.12)">Strategy</span>
           </article>
-
         </div>
       </div>
     </section>
 
     <!-- ═══════════ STATS ═══════════ -->
-    <section class="py-16 px-4 sm:px-6 border-y border-white/[0.07]">
+    <section class="py-16 px-4 sm:px-6" style="border-top:1px solid var(--bdr);border-bottom:1px solid var(--bdr)">
       <div class="max-w-5xl mx-auto">
         <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-          <div>
-            <div class="font-display font-light text-gold leading-none mb-2 stat-num" style="font-size:clamp(2.5rem,5vw,4rem)" data-target="5" data-suffix=" days">0 days</div>
-            <p class="text-muted text-xs tracking-wider uppercase">Delivery Guarantee</p>
+          <div class="reveal-up">
+            <div class="font-display font-light leading-none mb-2 stat-num" style="font-size:clamp(2.5rem,5vw,4rem);color:var(--cta)" data-target="5" data-suffix=" days">0 days</div>
+            <p class="text-xs tracking-wider uppercase" style="color:var(--muted)">Delivery Guarantee</p>
           </div>
-          <div>
-            <div class="font-display font-light text-gold leading-none mb-2 stat-num" style="font-size:clamp(2.5rem,5vw,4rem)" data-target="3" data-suffix="x">0x</div>
-            <p class="text-muted text-xs tracking-wider uppercase">Avg. Engagement Lift</p>
+          <div class="reveal-up">
+            <div class="font-display font-light leading-none mb-2 stat-num" style="font-size:clamp(2.5rem,5vw,4rem);color:var(--cta)" data-target="3" data-suffix="x">0x</div>
+            <p class="text-xs tracking-wider uppercase" style="color:var(--muted)">Avg. Engagement Lift</p>
           </div>
-          <div>
-            <div class="font-display font-light text-gold leading-none mb-2 stat-num" style="font-size:clamp(2.5rem,5vw,4rem)" data-target="18" data-suffix="K">0K</div>
-            <p class="text-muted text-xs tracking-wider uppercase">Avg. Followers Gained</p>
+          <div class="reveal-up">
+            <div class="font-display font-light leading-none mb-2 stat-num" style="font-size:clamp(2.5rem,5vw,4rem);color:var(--cta)" data-target="18" data-suffix="K">0K</div>
+            <p class="text-xs tracking-wider uppercase" style="color:var(--muted)">Avg. Followers Gained</p>
           </div>
-          <div>
-            <div class="font-display font-light text-gold leading-none mb-2 stat-num" style="font-size:clamp(2.5rem,5vw,4rem)" data-target="100" data-suffix="%">0%</div>
-            <p class="text-muted text-xs tracking-wider uppercase">Client Satisfaction</p>
+          <div class="reveal-up">
+            <div class="font-display font-light leading-none mb-2 stat-num" style="font-size:clamp(2.5rem,5vw,4rem);color:var(--cta)" data-target="100" data-suffix="%">0%</div>
+            <p class="text-xs tracking-wider uppercase" style="color:var(--muted)">Client Satisfaction</p>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ═══════════ CASE STUDIES ═══════════ -->
+    <!-- ═══════════════════════════════════
+         CASE STUDIES — Liquid Glass cards
+    ═══════════════════════════════════ -->
     <section id="work" class="py-28 px-4 sm:px-6 lg:px-8">
       <div class="max-w-6xl mx-auto">
-        <div class="reveal-up">
-          <p class="text-[0.7rem] font-medium tracking-[0.2em] uppercase text-gold mb-3">The Work</p>
-          <h2 class="font-display font-light tracking-tight mb-4" style="font-size:clamp(2rem,5vw,3.5rem)">
-            Results That <em class="italic text-gold">Speak</em>
+
+        <div class="reveal-up mb-16">
+          <p class="text-[0.68rem] font-medium tracking-[0.22em] uppercase mb-3" style="color:var(--cta)">The Work</p>
+          <h2 class="font-display font-light tracking-tight mb-4" style="font-size:clamp(2rem,5vw,3.5rem);color:var(--text)">
+            Results That <em class="italic" style="color:var(--cta)">Speak</em>
           </h2>
-          <p class="text-muted max-w-lg leading-relaxed">Real brands. Real numbers.</p>
+          <p class="max-w-lg leading-relaxed" style="color:var(--muted)">Real brands. Real numbers.</p>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-16">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
 
-          <article class="case-card bg-surface border border-white/[0.07] rounded-2xl p-8 reveal-up cursor-default">
-            <p class="text-[0.65rem] font-medium tracking-[0.15em] uppercase text-violet mb-6">Restaurant · Chicago</p>
-            <div class="font-display font-light text-gold leading-none mb-4" style="font-size:3.25rem">18K</div>
-            <h3 class="font-display text-xl font-normal mb-3">New followers &amp; a 3-week waitlist</h3>
-            <p class="text-muted text-sm leading-relaxed">6 Reels in 5 days for a Chicago steakhouse. One clip hit 1.2M organic views — no paid ads.</p>
-            <div class="mt-8 pt-6 border-t border-white/[0.07] flex items-center gap-2 text-xs text-muted">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg>
+          <article class="case-card glass rounded-2xl p-8 reveal-up cursor-default" style="transition:transform 0.4s cubic-bezier(0.16,1,0.3,1),box-shadow 0.4s" onmouseover="this.style.transform='translateY(-5px)';this.style.boxShadow='0 24px 56px rgba(0,0,0,0.35)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
+            <p class="text-[0.62rem] font-medium tracking-[0.15em] uppercase mb-6" style="color:#a78bfa">Restaurant · Chicago</p>
+            <div class="font-display font-light leading-none mb-4" style="font-size:3rem;color:var(--cta)">18K</div>
+            <h3 class="font-display text-xl font-normal mb-3" style="color:var(--text)">New followers &amp; a 3-week waitlist</h3>
+            <p class="text-sm leading-relaxed" style="color:var(--muted)">6 Reels in 5 days for a Chicago steakhouse. One clip hit 1.2M organic views — no paid ads.</p>
+            <div class="mt-8 pt-5 flex items-center gap-2 text-xs" style="border-top:1px solid var(--bdr);color:var(--subtle)">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg>
               90-day campaign
             </div>
           </article>
 
-          <article class="case-card bg-surface border border-white/[0.07] rounded-2xl p-8 reveal-up cursor-default">
-            <p class="text-[0.65rem] font-medium tracking-[0.15em] uppercase text-violet mb-6">E-commerce · Lithuania</p>
-            <div class="font-display font-light text-gold leading-none mb-4" style="font-size:3.25rem">340%</div>
-            <h3 class="font-display text-xl font-normal mb-3">Sales increase at product launch</h3>
-            <p class="text-muted text-sm leading-relaxed">A cinematic brand film for a Lithuanian skincare launch. 2.4M organic views, zero paid media spend.</p>
-            <div class="mt-8 pt-6 border-t border-white/[0.07] flex items-center gap-2 text-xs text-muted">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg>
+          <article class="case-card glass rounded-2xl p-8 reveal-up cursor-default" style="transition:transform 0.4s cubic-bezier(0.16,1,0.3,1),box-shadow 0.4s" onmouseover="this.style.transform='translateY(-5px)';this.style.boxShadow='0 24px 56px rgba(0,0,0,0.35)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
+            <p class="text-[0.62rem] font-medium tracking-[0.15em] uppercase mb-6" style="color:#a78bfa">E-commerce · Lithuania</p>
+            <div class="font-display font-light leading-none mb-4" style="font-size:3rem;color:var(--cta)">340%</div>
+            <h3 class="font-display text-xl font-normal mb-3" style="color:var(--text)">Sales increase at product launch</h3>
+            <p class="text-sm leading-relaxed" style="color:var(--muted)">A cinematic brand film for a Lithuanian skincare launch. 2.4M organic views, zero paid media spend.</p>
+            <div class="mt-8 pt-5 flex items-center gap-2 text-xs" style="border-top:1px solid var(--bdr);color:var(--subtle)">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg>
               4-video launch series
             </div>
           </article>
 
-          <article class="case-card bg-surface border border-white/[0.07] rounded-2xl p-8 reveal-up cursor-default">
-            <p class="text-[0.65rem] font-medium tracking-[0.15em] uppercase text-violet mb-6">Fitness · Los Angeles</p>
-            <div class="font-display font-light text-gold leading-none mb-4" style="font-size:3.25rem">14</div>
-            <h3 class="font-display text-xl font-normal mb-3">Days to a fully-booked calendar</h3>
-            <p class="text-muted text-sm leading-relaxed">Personal training studio, zero social presence. One Reel hit 890K views. Fully booked in 2 weeks.</p>
-            <div class="mt-8 pt-6 border-t border-white/[0.07] flex items-center gap-2 text-xs text-muted">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg>
+          <article class="case-card glass rounded-2xl p-8 reveal-up cursor-default" style="transition:transform 0.4s cubic-bezier(0.16,1,0.3,1),box-shadow 0.4s" onmouseover="this.style.transform='translateY(-5px)';this.style.boxShadow='0 24px 56px rgba(0,0,0,0.35)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
+            <p class="text-[0.62rem] font-medium tracking-[0.15em] uppercase mb-6" style="color:#a78bfa">Fitness · Los Angeles</p>
+            <div class="font-display font-light leading-none mb-4" style="font-size:3rem;color:var(--cta)">14</div>
+            <h3 class="font-display text-xl font-normal mb-3" style="color:var(--text)">Days to a fully-booked calendar</h3>
+            <p class="text-sm leading-relaxed" style="color:var(--muted)">Personal training studio, zero social presence. One Reel hit 890K views. Fully booked in 2 weeks.</p>
+            <div class="mt-8 pt-5 flex items-center gap-2 text-xs" style="border-top:1px solid var(--bdr);color:var(--subtle)">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg>
               6 Reels in 5 days
             </div>
           </article>
@@ -432,218 +565,214 @@
       </div>
     </section>
 
-    <!-- ═══════════ PROCESS ═══════════ -->
-    <section id="process" class="py-28 px-4 sm:px-6 lg:px-8 bg-surface">
+    <!-- ═══════════════════════════════════
+         PROCESS
+    ═══════════════════════════════════ -->
+    <section id="process" class="py-28 px-4 sm:px-6 lg:px-8" style="background:var(--surface)">
       <div class="max-w-3xl mx-auto">
-        <div class="reveal-up">
-          <p class="text-[0.7rem] font-medium tracking-[0.2em] uppercase text-gold mb-3">How It Works</p>
-          <h2 class="font-display font-light tracking-tight mb-4" style="font-size:clamp(2rem,5vw,3.5rem)">
-            From Brief to <em class="italic text-gold">Delivered</em>
+
+        <div class="reveal-up mb-16">
+          <p class="text-[0.68rem] font-medium tracking-[0.22em] uppercase mb-3" style="color:var(--cta)">How It Works</p>
+          <h2 class="font-display font-light tracking-tight mb-4" style="font-size:clamp(2rem,5vw,3.5rem);color:var(--text)">
+            From Brief to <em class="italic" style="color:var(--cta)">Delivered</em>
           </h2>
-          <p class="text-muted max-w-lg leading-relaxed">Five days. Four steps. Zero guesswork.</p>
+          <p class="max-w-lg leading-relaxed" style="color:var(--muted)">Five days. Four steps. Zero guesswork.</p>
         </div>
 
-        <ol class="mt-16" aria-label="5-day production process">
-
+        <ol aria-label="5-day production process">
           <li class="process-item relative flex gap-8 pb-12 reveal-up">
             <div class="process-line" aria-hidden="true"></div>
-            <div class="w-10 h-10 rounded-full border border-gold/30 flex items-center justify-center flex-shrink-0 bg-bg text-gold font-display text-sm font-semibold mt-0.5" aria-hidden="true">1</div>
+            <div class="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5 font-display text-sm font-semibold glass" style="color:var(--cta)" aria-hidden="true">1</div>
             <div class="pt-1.5">
-              <p class="text-[0.65rem] font-medium tracking-[0.15em] uppercase text-gold/60 mb-1">Day 1</p>
-              <h3 class="font-display text-2xl font-normal mb-2">Brief &amp; Direction</h3>
-              <p class="text-muted text-sm leading-relaxed max-w-md">We lock your visual universe — character, location palette, mood, narrative arc. Every detail defined before production starts.</p>
+              <p class="text-[0.62rem] font-medium tracking-[0.15em] uppercase mb-1" style="color:rgba(202,138,4,0.6)">Day 1</p>
+              <h3 class="font-display text-2xl font-normal mb-2" style="color:var(--text)">Brief &amp; Direction</h3>
+              <p class="text-sm leading-relaxed max-w-md" style="color:var(--muted)">We lock your visual universe — character, palette, mood, narrative arc. Every detail defined before production starts.</p>
             </div>
           </li>
-
           <li class="process-item relative flex gap-8 pb-12 reveal-up">
             <div class="process-line" aria-hidden="true"></div>
-            <div class="w-10 h-10 rounded-full border border-gold/30 flex items-center justify-center flex-shrink-0 bg-bg text-gold font-display text-sm font-semibold mt-0.5" aria-hidden="true">2</div>
+            <div class="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5 font-display text-sm font-semibold glass" style="color:var(--cta)" aria-hidden="true">2</div>
             <div class="pt-1.5">
-              <p class="text-[0.65rem] font-medium tracking-[0.15em] uppercase text-gold/60 mb-1">Days 2–3</p>
-              <h3 class="font-display text-2xl font-normal mb-2">Production</h3>
-              <p class="text-muted text-sm leading-relaxed max-w-md">Shot-by-shot assembly with match-cut precision, platform-calibrated pacing, and a visual fingerprint unique to your brand.</p>
+              <p class="text-[0.62rem] font-medium tracking-[0.15em] uppercase mb-1" style="color:rgba(202,138,4,0.6)">Days 2–3</p>
+              <h3 class="font-display text-2xl font-normal mb-2" style="color:var(--text)">Production</h3>
+              <p class="text-sm leading-relaxed max-w-md" style="color:var(--muted)">Shot-by-shot assembly with match-cut precision, platform-calibrated pacing, and a visual fingerprint unique to your brand.</p>
             </div>
           </li>
-
           <li class="process-item relative flex gap-8 pb-12 reveal-up">
             <div class="process-line" aria-hidden="true"></div>
-            <div class="w-10 h-10 rounded-full border border-gold/30 flex items-center justify-center flex-shrink-0 bg-bg text-gold font-display text-sm font-semibold mt-0.5" aria-hidden="true">3</div>
+            <div class="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5 font-display text-sm font-semibold glass" style="color:var(--cta)" aria-hidden="true">3</div>
             <div class="pt-1.5">
-              <p class="text-[0.65rem] font-medium tracking-[0.15em] uppercase text-gold/60 mb-1">Day 4</p>
-              <h3 class="font-display text-2xl font-normal mb-2">Review &amp; Revisions</h3>
-              <p class="text-muted text-sm leading-relaxed max-w-md">You review the first cut. We refine based on your feedback — every revision included in your package, no pushback.</p>
+              <p class="text-[0.62rem] font-medium tracking-[0.15em] uppercase mb-1" style="color:rgba(202,138,4,0.6)">Day 4</p>
+              <h3 class="font-display text-2xl font-normal mb-2" style="color:var(--text)">Review &amp; Revisions</h3>
+              <p class="text-sm leading-relaxed max-w-md" style="color:var(--muted)">You review the first cut. We refine based on your feedback — every revision included, no pushback.</p>
             </div>
           </li>
-
           <li class="process-item relative flex gap-8 reveal-up">
-            <div class="w-10 h-10 rounded-full border border-gold/30 flex items-center justify-center flex-shrink-0 bg-bg text-gold font-display text-sm font-semibold mt-0.5" aria-hidden="true">4</div>
+            <div class="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5 font-display text-sm font-semibold glass" style="color:var(--cta)" aria-hidden="true">4</div>
             <div class="pt-1.5">
-              <p class="text-[0.65rem] font-medium tracking-[0.15em] uppercase text-gold/60 mb-1">Day 5</p>
-              <h3 class="font-display text-2xl font-normal mb-2">Delivery</h3>
-              <p class="text-muted text-sm leading-relaxed max-w-md">Final files in every format you need — optimised for Instagram, TikTok, and web. Ready to publish the moment you receive them.</p>
+              <p class="text-[0.62rem] font-medium tracking-[0.15em] uppercase mb-1" style="color:rgba(202,138,4,0.6)">Day 5</p>
+              <h3 class="font-display text-2xl font-normal mb-2" style="color:var(--text)">Delivery</h3>
+              <p class="text-sm leading-relaxed max-w-md" style="color:var(--muted)">Final files in every format — optimised for Instagram, TikTok, and web. Ready to publish the moment you receive them.</p>
             </div>
           </li>
-
         </ol>
       </div>
     </section>
 
-    <!-- ═══════════ PRICING ═══════════ -->
-    <section id="pricing" class="py-28 px-4 sm:px-6 lg:px-8">
-      <div class="max-w-6xl mx-auto">
+    <!-- ═══════════════════════════════════
+         FINAL CTA
+    ═══════════════════════════════════ -->
+    <section id="contact" class="relative py-32 px-4 sm:px-6 text-center overflow-hidden">
 
-        <div class="reveal-up text-center mb-16">
-          <p class="text-[0.7rem] font-medium tracking-[0.2em] uppercase text-gold mb-3">Pricing</p>
-          <h2 class="font-display font-light tracking-tight mb-4" style="font-size:clamp(2rem,5vw,3.5rem)">
-            Simple, <em class="italic text-gold">Transparent</em> Pricing
-          </h2>
-          <p class="text-muted max-w-lg mx-auto leading-relaxed">No retainers, no surprises. Choose the package that matches your goal.</p>
-        </div>
-
-        <div class="pricing-grid grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
-
-          <article class="pricing-card bg-surface border border-white/[0.07] rounded-2xl p-8 reveal-up">
-            <p class="text-[0.65rem] font-medium tracking-[0.15em] uppercase text-muted mb-6">Single Project</p>
-            <div class="font-display font-light text-[#f4f4f5] leading-none mb-1" style="font-size:3.25rem">$499</div>
-            <p class="text-muted text-sm mb-8">per Reel</p>
-            <ul class="space-y-3 mb-10 text-sm text-muted" role="list">
-              <li class="flex items-start gap-2.5"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#c9a96e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="mt-0.5 flex-shrink-0" aria-hidden="true"><polyline points="20,6 9,17 4,12"/></svg>1 cinematic Reel</li>
-              <li class="flex items-start gap-2.5"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#c9a96e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="mt-0.5 flex-shrink-0" aria-hidden="true"><polyline points="20,6 9,17 4,12"/></svg>5-day delivery</li>
-              <li class="flex items-start gap-2.5"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#c9a96e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="mt-0.5 flex-shrink-0" aria-hidden="true"><polyline points="20,6 9,17 4,12"/></svg>Script &amp; creative direction</li>
-              <li class="flex items-start gap-2.5"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#c9a96e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="mt-0.5 flex-shrink-0" aria-hidden="true"><polyline points="20,6 9,17 4,12"/></svg>1 round of revisions</li>
-              <li class="flex items-start gap-2.5"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#c9a96e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="mt-0.5 flex-shrink-0" aria-hidden="true"><polyline points="20,6 9,17 4,12"/></svg>Caption &amp; hashtag system</li>
-            </ul>
-            <a href="#contact" class="block text-center btn-ghost px-6 py-3 rounded text-sm cursor-pointer min-h-[44px]">Get Started</a>
-          </article>
-
-          <article class="pricing-card pricing-featured bg-surface border border-gold/30 rounded-2xl p-8 reveal-up relative">
-            <div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-gold text-bg text-[0.65rem] font-semibold tracking-[0.12em] uppercase px-4 py-1.5 rounded-full whitespace-nowrap">Most Popular</div>
-            <p class="text-[0.65rem] font-medium tracking-[0.15em] uppercase text-muted mb-6">Monthly Retainer</p>
-            <div class="font-display font-light text-[#f4f4f5] leading-none mb-1" style="font-size:3.25rem">$1,299</div>
-            <p class="text-muted text-sm mb-8">/ month</p>
-            <ul class="space-y-3 mb-10 text-sm text-muted" role="list">
-              <li class="flex items-start gap-2.5"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#c9a96e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="mt-0.5 flex-shrink-0" aria-hidden="true"><polyline points="20,6 9,17 4,12"/></svg>4 Reels per month</li>
-              <li class="flex items-start gap-2.5"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#c9a96e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="mt-0.5 flex-shrink-0" aria-hidden="true"><polyline points="20,6 9,17 4,12"/></svg>5-day delivery per video</li>
-              <li class="flex items-start gap-2.5"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#c9a96e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="mt-0.5 flex-shrink-0" aria-hidden="true"><polyline points="20,6 9,17 4,12"/></svg>Strategy &amp; content calendar</li>
-              <li class="flex items-start gap-2.5"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#c9a96e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="mt-0.5 flex-shrink-0" aria-hidden="true"><polyline points="20,6 9,17 4,12"/></svg>2 revisions per video</li>
-              <li class="flex items-start gap-2.5"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#c9a96e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="mt-0.5 flex-shrink-0" aria-hidden="true"><polyline points="20,6 9,17 4,12"/></svg>Monthly performance review</li>
-              <li class="flex items-start gap-2.5"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#c9a96e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="mt-0.5 flex-shrink-0" aria-hidden="true"><polyline points="20,6 9,17 4,12"/></svg>Priority turnaround</li>
-            </ul>
-            <a href="#contact" class="block text-center btn-gold px-6 py-3 rounded text-sm cursor-pointer min-h-[44px]">Book a Free 20-min Call</a>
-          </article>
-
-          <article class="pricing-card bg-surface border border-white/[0.07] rounded-2xl p-8 reveal-up">
-            <p class="text-[0.65rem] font-medium tracking-[0.15em] uppercase text-muted mb-6">Brand Film</p>
-            <div class="font-display font-light text-[#f4f4f5] leading-none mb-1" style="font-size:3.25rem">$3,499</div>
-            <p class="text-muted text-sm mb-8">one-time</p>
-            <ul class="space-y-3 mb-10 text-sm text-muted" role="list">
-              <li class="flex items-start gap-2.5"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#c9a96e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="mt-0.5 flex-shrink-0" aria-hidden="true"><polyline points="20,6 9,17 4,12"/></svg>60–90 sec cinematic brand film</li>
-              <li class="flex items-start gap-2.5"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#c9a96e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="mt-0.5 flex-shrink-0" aria-hidden="true"><polyline points="20,6 9,17 4,12"/></svg>3 short-form cutdowns</li>
-              <li class="flex items-start gap-2.5"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#c9a96e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="mt-0.5 flex-shrink-0" aria-hidden="true"><polyline points="20,6 9,17 4,12"/></svg>Full script &amp; creative direction</li>
-              <li class="flex items-start gap-2.5"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#c9a96e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="mt-0.5 flex-shrink-0" aria-hidden="true"><polyline points="20,6 9,17 4,12"/></svg>3 rounds of revisions</li>
-              <li class="flex items-start gap-2.5"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#c9a96e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="mt-0.5 flex-shrink-0" aria-hidden="true"><polyline points="20,6 9,17 4,12"/></svg>Multi-platform delivery</li>
-              <li class="flex items-start gap-2.5"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#c9a96e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="mt-0.5 flex-shrink-0" aria-hidden="true"><polyline points="20,6 9,17 4,12"/></svg>Usage rights included</li>
-            </ul>
-            <a href="#contact" class="block text-center btn-ghost px-6 py-3 rounded text-sm cursor-pointer min-h-[44px]">Get Started</a>
-          </article>
-
-        </div>
-
-        <p class="text-center text-muted text-sm mt-8 reveal-up">
-          Not sure which fits? <a href="#contact" class="text-gold hover:underline cursor-pointer transition-colors">Let's talk</a> — we'll figure it out in 20 minutes.
-        </p>
-      </div>
-    </section>
-
-    <!-- ═══════════ FINAL CTA ═══════════ -->
-    <section id="contact" class="relative py-32 px-4 sm:px-6 bg-surface text-center overflow-hidden">
+      <!-- Iridescent glow background -->
       <div class="absolute inset-0 pointer-events-none" aria-hidden="true"
-           style="background:radial-gradient(ellipse 70% 70% at 50% 50%,rgba(201,169,110,0.07) 0%,transparent 70%)"></div>
+           style="background:radial-gradient(ellipse 65% 65% at 50% 50%,var(--blob-1) 0%,transparent 70%)"></div>
+
       <div class="max-w-3xl mx-auto relative reveal-up">
-        <p class="text-[0.7rem] font-medium tracking-[0.2em] uppercase text-gold mb-6">Ready?</p>
-        <h2 class="font-display font-light tracking-tight mb-6" style="font-size:clamp(2.5rem,6vw,5rem)">
-          See What 5 Days<br><em class="italic text-gold">Can Do For You</em>
+        <p class="text-[0.68rem] font-medium tracking-[0.22em] uppercase mb-6" style="color:var(--cta)">Ready?</p>
+        <h2 class="font-display font-light tracking-tight mb-6 chroma" style="font-size:clamp(2.5rem,6vw,5rem);color:var(--text)">
+          See What 5 Days<br><em class="italic" style="color:var(--cta)">Can Do For You</em>
         </h2>
-        <p class="text-muted text-lg leading-relaxed mb-10 max-w-xl mx-auto">
+        <p class="text-lg leading-relaxed mb-10 max-w-xl mx-auto" style="color:var(--muted)">
           Book a free 20-minute call. We'll look at your brand, discuss what's possible, and outline a plan — no commitment, no hard sell.
         </p>
         <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-          <a href="mailto:ltvmediapro@gmail.com" class="inline-flex items-center justify-center gap-2.5 btn-gold px-10 py-4 rounded text-base cursor-pointer min-h-[56px] w-full sm:w-auto">
+          <a href="mailto:ltvmediapro@gmail.com"
+             class="inline-flex items-center justify-center gap-2.5 btn-cta px-10 py-4 rounded-xl text-base cursor-pointer min-h-[56px] w-full sm:w-auto">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.63 19.79 19.79 0 01.01 1.01 2 2 0 012 0h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 14.92z"/></svg>
             Book a Free 20-min Call
           </a>
           <a href="https://instagram.com/ltvmediapro" target="_blank" rel="noopener noreferrer"
-             class="inline-flex items-center justify-center gap-2 btn-ghost px-8 py-4 rounded text-base cursor-pointer min-h-[56px] w-full sm:w-auto">
+             class="inline-flex items-center justify-center gap-2 btn-ghost px-8 py-4 rounded-xl text-base cursor-pointer min-h-[56px] w-full sm:w-auto">
             @ltvmediapro
           </a>
         </div>
-        <p class="mt-6 text-xs tracking-wider" style="color:rgba(113,113,122,0.5)">ltvmediapro@gmail.com · Response within 24h</p>
+        <p class="mt-6 text-xs tracking-wider" style="color:var(--subtle)">ltvmediapro@gmail.com · Response within 24h</p>
       </div>
     </section>
 
   </main>
 
   <!-- FOOTER -->
-  <footer class="border-t border-white/[0.07] px-4 sm:px-6 lg:px-8 py-8" role="contentinfo">
+  <footer class="px-4 sm:px-6 lg:px-8 py-8" style="border-top:1px solid var(--bdr)" role="contentinfo">
     <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
-      <div class="font-display text-lg font-semibold">LTV Media<span class="text-gold">PRO</span></div>
+      <div class="font-display text-lg font-bold" style="color:var(--text)">LTV Media<span style="color:var(--cta)">PRO</span></div>
       <ul class="flex gap-6 list-none" role="list">
-        <li><a href="#services" class="text-sm text-muted hover:text-[#f4f4f5] transition-colors cursor-pointer">Services</a></li>
-        <li><a href="#work"     class="text-sm text-muted hover:text-[#f4f4f5] transition-colors cursor-pointer">Work</a></li>
-        <li><a href="#pricing"  class="text-sm text-muted hover:text-[#f4f4f5] transition-colors cursor-pointer">Pricing</a></li>
-        <li><a href="https://instagram.com/ltvmediapro" target="_blank" rel="noopener noreferrer" class="text-sm text-muted hover:text-[#f4f4f5] transition-colors cursor-pointer">Instagram</a></li>
+        <li><a href="#services" class="text-sm transition-colors cursor-pointer" style="color:var(--muted)" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--muted)'">Services</a></li>
+        <li><a href="#work"     class="text-sm transition-colors cursor-pointer" style="color:var(--muted)" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--muted)'">Work</a></li>
+        <li><a href="#process"  class="text-sm transition-colors cursor-pointer" style="color:var(--muted)" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--muted)'">Process</a></li>
+        <li><a href="https://instagram.com/ltvmediapro" target="_blank" rel="noopener noreferrer" class="text-sm transition-colors cursor-pointer" style="color:var(--muted)" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--muted)'">Instagram</a></li>
       </ul>
-      <p class="text-xs text-muted">© 2026 LTV Media PRO · Chicago &amp; Lithuania</p>
+      <p class="text-xs" style="color:var(--subtle)">© 2026 LTV Media PRO · Chicago &amp; Lithuania</p>
     </div>
   </footer>
 
+  <!-- GSAP -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
   <script>
     gsap.registerPlugin(ScrollTrigger);
 
-    // Hero entrance
-    const tl = gsap.timeline({ defaults: { ease: 'power3.out' }, delay: 0.15 });
-    tl.from('.frame-marks', { opacity: 0, duration: 1 })
-      .from('.hero-badge',  { opacity: 0, y: 20, duration: 0.7 }, '-=0.6')
-      .from('.hero-line-1', { opacity: 0, y: 30, duration: 0.8 }, '-=0.4')
-      .from('.hero-line-2', { opacity: 0, y: 35, duration: 0.9 }, '-=0.55')
-      .from('.hero-line-3', { opacity: 0, y: 30, duration: 0.8 }, '-=0.55')
-      .from('.hero-sub',    { opacity: 0, y: 20, duration: 0.7 }, '-=0.4')
-      .from('.hero-cta',    { opacity: 0, y: 20, duration: 0.7 }, '-=0.35')
-      .from('.hero-trust',  { opacity: 0, duration: 0.6 },        '-=0.3');
+    // ─── Theme toggle (Magic MCP pattern: spring animation, localStorage) ───
+    const html     = document.documentElement;
+    const themeBtn = document.getElementById('theme-toggle');
 
-    // Scroll reveal
+    // Init from localStorage or system preference
+    const saved = localStorage.getItem('ltv-theme') ||
+      (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+    html.setAttribute('data-theme', saved);
+
+    themeBtn.addEventListener('click', () => {
+      const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      html.classList.add('theme-transitioning');
+      html.setAttribute('data-theme', next);
+      localStorage.setItem('ltv-theme', next);
+      themeBtn.setAttribute('aria-label', `Switch to ${next === 'dark' ? 'light' : 'dark'} mode`);
+      setTimeout(() => html.classList.remove('theme-transitioning'), 400);
+    });
+
+    // ─── Mobile menu ───
+    const menuToggle = document.getElementById('menu-toggle');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const b1 = document.getElementById('bar1');
+    const b2 = document.getElementById('bar2');
+    const b3 = document.getElementById('bar3');
+    let menuOpen = false;
+
+    function setMenu(state) {
+      menuOpen = state;
+      mobileMenu.classList.toggle('open', state);
+      menuToggle.setAttribute('aria-expanded', String(state));
+      b1.style.transform = state ? 'translateY(6px) rotate(45deg)' : '';
+      b2.style.opacity   = state ? '0' : '1';
+      b3.style.transform = state ? 'translateY(-6px) rotate(-45deg)' : '';
+      b3.style.width     = state ? '20px' : '';
+    }
+
+    menuToggle.addEventListener('click', () => setMenu(!menuOpen));
+    mobileMenu.querySelectorAll('a').forEach(a =>
+      a.addEventListener('click', () => setMenu(false))
+    );
+
+    // ─── Hero entrance (skill: 400-600ms fluid animations) ───
+    const heroTl = gsap.timeline({ defaults: { ease: 'power3.out' }, delay: 0.1 });
+    heroTl
+      .from('.frame-marks > span', { opacity: 0, duration: 0.8, stagger: 0.08 })
+      .from('.hero-badge',  { opacity: 0, y: 18, duration: 0.6 }, '-=0.5')
+      .from('.hero-line-1', { opacity: 0, y: 28, duration: 0.7 }, '-=0.35')
+      .from('.hero-line-2', { opacity: 0, y: 32, duration: 0.85 }, '-=0.5')
+      .from('.hero-line-3', { opacity: 0, y: 28, duration: 0.7 }, '-=0.5')
+      .from('.hero-sub',    { opacity: 0, y: 18, duration: 0.65 }, '-=0.35')
+      .from('.hero-cta',    { opacity: 0, y: 18, duration: 0.65 }, '-=0.3')
+      .from('.hero-trust',  { opacity: 0, duration: 0.5 },         '-=0.25');
+
+    // ─── Parallax blobs (skill: transform-performance rule, prefers-reduced-motion) ───
+    const noMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!noMotion) {
+      gsap.to('.blob-1', {
+        y: -160,
+        scrollTrigger: { trigger: '#hero', start: 'top top', end: 'bottom top', scrub: 1.8 }
+      });
+      gsap.to('.blob-2', {
+        y: -90,
+        scrollTrigger: { trigger: '#hero', start: 'top top', end: 'bottom top', scrub: 2.5 }
+      });
+      gsap.to('.blob-3', {
+        y: -60,
+        scrollTrigger: { trigger: '#hero', start: 'top top', end: 'bottom top', scrub: 3 }
+      });
+      gsap.to('.hero-content', {
+        y: 70,
+        scrollTrigger: { trigger: '#hero', start: 'top top', end: 'bottom top', scrub: 1 }
+      });
+    }
+
+    // ─── Scroll reveals ───
     gsap.utils.toArray('.reveal-up').forEach(el => {
       gsap.from(el, {
-        opacity: 0, y: 40, duration: 0.8, ease: 'power3.out',
+        opacity: 0, y: 36, duration: 0.75, ease: 'power3.out',
         scrollTrigger: { trigger: el, start: 'top 88%' }
       });
     });
 
-    // Service cards stagger
-    gsap.from('.service-card', {
-      opacity: 0, y: 40, stagger: 0.08, duration: 0.7, ease: 'power3.out',
-      scrollTrigger: { trigger: '.services-grid', start: 'top 80%' }
+    // ─── Service cards stagger ───
+    gsap.from('.services-grid article', {
+      opacity: 0, y: 36, stagger: 0.09, duration: 0.7, ease: 'power3.out',
+      scrollTrigger: { trigger: '.services-grid', start: 'top 82%' }
     });
 
-    // Case cards stagger
+    // ─── Case cards stagger ───
     gsap.from('.case-card', {
-      opacity: 0, y: 40, stagger: 0.1, duration: 0.7, ease: 'power3.out',
-      scrollTrigger: { trigger: '.case-card', start: 'top 85%' }
+      opacity: 0, y: 36, stagger: 0.1, duration: 0.7, ease: 'power3.out',
+      scrollTrigger: { trigger: '.case-card', start: 'top 86%' }
     });
 
-    // Pricing cards
-    gsap.from('.pricing-card', {
-      opacity: 0, y: 40, scale: 0.98, stagger: 0.1, duration: 0.7, ease: 'power3.out',
-      scrollTrigger: { trigger: '.pricing-grid', start: 'top 80%' }
-    });
-
-    // Stats counter
+    // ─── Stats counter ───
     document.querySelectorAll('.stat-num').forEach(el => {
       const target = parseInt(el.dataset.target);
       const suffix = el.dataset.suffix || '';
-      const obj = { val: 0 };
+      const obj    = { val: 0 };
       ScrollTrigger.create({
         trigger: el, start: 'top 85%', once: true,
         onEnter: () => gsap.to(obj, {
@@ -653,32 +782,18 @@
       });
     });
 
-    // Nav blur on scroll
+    // ─── Nav: add subtle glass on scroll ───
     ScrollTrigger.create({
-      start: 'top -80',
-      onUpdate: self => document.getElementById('nav').classList.toggle('nav-scrolled', self.scroll() > 80)
+      start: 'top -60',
+      onUpdate: self => {
+        const nav = document.querySelector('.glass-nav');
+        if (self.scroll() > 60) {
+          nav.style.boxShadow = '0 8px 32px rgba(0,0,0,0.25)';
+        } else {
+          nav.style.boxShadow = '';
+        }
+      }
     });
-
-    // Mobile menu
-    const toggle = document.getElementById('menu-toggle');
-    const menu   = document.getElementById('mobile-menu');
-    const bar1   = document.getElementById('bar1');
-    const bar2   = document.getElementById('bar2');
-    const bar3   = document.getElementById('bar3');
-    let open = false;
-
-    function setMenu(state) {
-      open = state;
-      menu.classList.toggle('hidden', !open);
-      toggle.setAttribute('aria-expanded', String(open));
-      bar1.style.transform = open ? 'translateY(6px) rotate(45deg)' : '';
-      bar2.style.opacity   = open ? '0' : '1';
-      bar3.style.transform = open ? 'translateY(-6px) rotate(-45deg)' : '';
-      bar3.style.width     = open ? '24px' : '';
-    }
-
-    toggle.addEventListener('click', () => setMenu(!open));
-    menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setMenu(false)));
   </script>
 
 </body>
